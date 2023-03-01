@@ -1,0 +1,243 @@
+@layer design {
+	/*
+		# Form management
+
+		NOTES:
+
+		- It is valid to use <link type="stylesheet" href="..." /> inside <body>
+		- Because of this, and because linked resources are cached and not re-fetched if already downloaded, it's likely a neat way to have minimal CSS loaded on any page.
+
+		REFERENCE:
+		https://html.spec.whatwg.org/multipage/links.html#body-ok
+	*/
+
+	label {
+		display: block;
+
+		& > span {
+			font-size: 0.875em; text-transform: uppercase;
+		}
+
+		&:not(.boolean) > span {
+			display: block; margin-bottom: 0.5em;
+		}
+
+		&.boolean {
+			& span,
+			& input {
+				display: inline-block;
+			}
+		}
+	}
+
+	.legend {
+		display: block; margin-bottom: 1em;
+		font-size: 0.875em; text-transform: uppercase;
+	}
+
+	input[type="text"],
+	input[type="email"],
+	input[type="search"],
+	input[type="password"],
+	input[type="number"],
+	input[type="date"],
+	textarea,
+	select {
+		width        : 100%;
+		padding      : var(--input-padding);
+		border-style : solid;
+		border-width : var(--input-border-width);
+		border-color : var(--input-border-colour);
+		border-radius: var(--input-border-radius);
+		transition   : all var(--fast);
+		caret-color  : var(--input-caret-colour);
+		color        : initial;
+
+		/*
+			&:focus,
+			&:focus-visible {
+				border-color: currentColor;
+				outline: 0 !important;
+			}
+		*/
+	}
+
+	select {
+		-moz-appearance    : none; -webkit-appearance: none;
+		padding-right      : calc( 1.25em + var(--input-padding) );
+		background-image   : url(/design-assets/images/chevron-down.svg);
+		background-repeat  : no-repeat;
+		background-position: right .7em top 50%;
+		background-size    : 1.25em auto;
+	}
+	select::-ms-expand {
+		display: none;
+	}
+
+	.fieldset {
+		& legend {
+			text-transform: uppercase; letter-spacing: 0.05em;
+		}
+
+		& fieldset > * + * {
+			margin-block-start: 1rem;
+		}
+
+		&.required,
+		&:has(*[required]) {
+			legend {
+				&:after {
+					content: " *";
+					font-weight: bold; opacity: 0.5;
+				}
+			}
+		}
+
+		& [class^='fieldset-'] {
+			max-width: 52ch;
+
+			& > * + * {
+				margin-block-start: 1em;
+			}
+
+			& ul {
+				margin-inline-start: 1em;
+			}
+		}
+
+		& .fieldset-error-message {
+			padding: 1rem 0.5rem 1em 3.5em; border-radius: 0.5rem 0.5rem; border: 0.15em solid red;
+			background-image:
+				url(/design-assets/images/exclamation-triangle.svg),
+				linear-gradient(to right, red 0 2.6em, white 2.6em 100% );
+			background-position:
+				0.65em 0.85em,
+				0 0;
+			background-size:
+				1.25em auto,
+				100% 100%;
+			background-repeat:
+				no-repeat,
+				no-repeat;
+		}
+		& .fieldset-instructions {
+			padding: 1rem 0.5rem 1em 3.5em; border-radius: 0.5rem 0.5rem; border: 0.15em solid blue;
+			background-image:
+				url(/design-assets/images/information-circle.svg),
+				linear-gradient(to right, blue 0 2.6em, white 2.6em 100% );
+			background-position:
+				0.65em 0.85em,
+				0 0;
+			background-size:
+				1.25em auto,
+				100% 100%;
+			background-repeat:
+				no-repeat,
+				no-repeat;
+		}
+
+		& > div {
+			margin-top: var(--gap);
+		}
+
+		& .theOptions {
+			margin-top: calc( 0.5 * var(--gap) );
+			display: flex; flex-wrap: wrap; gap: calc( 2 * var(--gap) );
+			padding      : var(--input-padding);
+			border-style : solid;
+			border-width : var(--input-border-width);
+			border-color : var(--input-border-colour);
+			border-radius: var(--input-border-radius);
+
+			& .htmlField {
+				margin-bottom: 0;
+			}
+		}
+	}
+
+	div.formField,
+	div.htmlField {
+		margin-bottom: var(--gap);
+
+		&.required,
+		&:has(*[required]) {
+			& label > span {
+				&:after {
+					content: " *";
+					font-weight: bold; opacity: 0.5;
+				}
+			}
+		}
+
+		&.radio,
+		&.checkbox {
+			& label {
+				display: flex;
+
+				& input {
+					margin-right: 20px;
+				}
+			}
+		}
+
+		& .field-error-message {
+			padding: 0.25em 0.5em 0.5em;
+			border-radius: 0 0 var(--input-border-radius, 0.25rem) var(--input-border-radius, 0.25rem);
+			background-color: red; color: white;
+		}
+
+		& .form-instructions {
+			padding: 0.25em 0.5em 0.5em;
+			border-radius: 0 0 var(--input-border-radius, 0.25rem) var(--input-border-radius, 0.25rem);
+			background-color: var(--input-border-colour); color: white;
+			font-size: 0.875em;
+		}
+
+		&.hasError {
+			--input-border-colour: red;
+
+			& .form-instructions {
+				border-radius: 0; border-right-color: red; border-left-color: red;
+			}
+		}
+	}
+
+	.formActions {
+		display: flex; align-items: center; justify-content: space-between;
+		margin-top: var(--gap);
+
+		& > * { margin-right: 1em; }
+		& > *:last-child { margin-right: 0; }
+	}
+
+	.previouslyUploaded {
+		& p {
+			@include uppercase; margin-bottom: 0.5em;
+		}
+
+		& ul {
+			--minimum-width: 220px;
+
+			display: grid; grid-gap: var(--gap, 1rem);
+			grid-template-columns: repeat(auto-fill, minmax( min( var(--minimum-width, 220px), 100% ), 1fr) );
+		}
+
+		& li {
+			position: relative;
+			display: flex;
+
+			& a {
+				position: absolute; top: 0; right: 0;
+				padding: 0.5em; background-color: white;
+
+				&:hover {
+					cursor: pointer;
+				}
+			}
+
+			& img {
+				width: 100%; display: flex;
+			}
+		}
+	}
+}

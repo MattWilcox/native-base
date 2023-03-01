@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+	<meta charset="utf-8" />
+	<meta name="viewport"
+	      content="width=device-width,initial-scale=1" />
+	<!-- LEARN MORE:
+	     What can go in the head, and why MUST those two go first?
+	     https://github.com/joshbuchea/HEAD#recommended-minimum
+	-->
+
+	<title>Native Base</title>
+
+	<!-- OPTIONAL: Preloading design assets.
+	     Only preload design assets that are CERTAIN to be required to display content on the device before scrolling the page.
+	-->
+	<link
+		rel="preload"
+		as="font"
+		crossorigin="anonymous"
+		type="font/woff2"
+		href="/design-assets/fonts/subset-Poppins-Regular.woff2"
+	/>
+	<link
+		rel="preload"
+		as="font"
+		crossorigin="anonymous"
+		type="font/woff2"
+		href="/design-assets/fonts/subset-LibreBaskerville-Regular.woff2"
+	/>
+
+	<!-- Website styles -->
+	<link
+		rel="stylesheet"
+		media="screen"
+		href="/design-assets/css/screen-core.css"
+	/>
+
+	<!-- OPTIONAL: environmental state indicators.
+	     Add environmental state indicator classes to the HTML element as soon as possible.
+
+	     NOTE: Scripts with a type of module are parsed only by modern browsers. This means we have Fetch, ES6, etc.
+	-->
+	<script type="module">
+		const htmlElement = document.querySelector('html');
+
+		htmlElement.classList.add('js');
+
+		document.addEventListener('DOMContentLoaded', function() {
+			htmlElement.classList.add('load-complete');
+		});
+	</script>
+
+	<!-- Basic modern features -->
+	<meta name="theme-color"
+	      content="#ffffff"><!-- learn more: https://developer.mozilla.org/en-US/docs/Web/HTML/Element/meta/name/theme-color -->
+	<link rel="icon" href="/design-assets/images/favicon.svg"/><!-- SVG's can be made "darkmode" aware. See the linked example SVG. -->
+</head>
+<body>
+	<a href="#main" class="skiplink uc_hide-visually">Skip navigation and jump to content</a>
+
+	<header>
+		<h1>Native Base</h1>
+		<nav aria-label="Site Navigation">
+			<ul>
+				<li>
+					<a href="/" aria-current="page">Home</a>
+				</li>
+				<li>
+					<a href="/kitchen-sink">Kitchen Sink</a>
+				</li>
+			</ul>
+		</nav>
+	</header>
+
+	<main id="main">
+		<article>
+			<h2>Context</h2>
+			<p>Native Base is a pure HTML/CSS/JS "starter" system for 2023, aiming for best-practice patterns as a starting place upon which to build other projects. <a href="">Learn more about this project's goals on GitHub</a>.</p>
+		</article>
+
+		<article>
+			<h2>Coding Style</h2>
+			<ul>
+				<li>Tabs for indentation</li>
+				<li>Spaces for alignment</li>
+			</ul>
+			<p>There is no argument. Tabs should always be used for indentation and it is not a matter of author preference, it is a matter of respecting other people and allowing them to have their own accommodations.</p>
+			<p>Tab width is configurable by the person looking at the code. If they prefer a tab to be 2, or 4, or 8 spaces wide they can set that in their editor. Just as they can set line heights. So can you. Further, screen reader technology handles tabbed indentation better than spaces used for indentation.</p>
+			<p>Be respectful of other people. Use tabs. It does not stop your own editor from displaying exactly how you want it, and it allows others to have it how they want it.</p>
+			<p>I will not put up with people arguing that tabbed indentation is somehow an inconvenience to them because tabs are too deep for their preference, and they are used to typing two spaces or something. Learn your editor, configure that depth to your liking. If you can program, you can work that out. Use the tab key, use the tab character.</p>
+			<p>Virtually any other coding style I'm flexible on.</p>
+		</article>
+
+		<article>
+			<h2>Comments</h2>
+			<p>When a server sends HTML it should ideally be configured to minify and compress the mark-up, which removes HTML comments too. As such; liberally comment your code. It has no impact on the end product, and it will help others - and yourself - understand what you were thinking, referencing, and doing at the time.</p>
+			<p>If you're working in a templating language, it may make sense to use the template languages comments rather than HTML's more verbose comment syntax.</p>
+		</article>
+	</main>
+
+	<footer>
+		<p>This is the footer.</p>
+	</footer>
+</body>

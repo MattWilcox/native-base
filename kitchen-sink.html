@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+	<meta charset="utf-8" />
+	<meta name="viewport"
+	      content="width=device-width,initial-scale=1" />
+	<!-- LEARN MORE:
+	     What can go in the head, and why MUST those two go first?
+	     https://github.com/joshbuchea/HEAD#recommended-minimum
+	-->
+
+	<title>Kitchen Sink | Native Base</title>
+
+	<!-- OPTIONAL: Preloading design assets.
+	     Only preload design assets that are CERTAIN to be required to display content on the device before scrolling the page.
+	-->
+	<link
+		rel="preload"
+		as="font"
+		crossorigin="anonymous"
+		type="font/woff2"
+		href="/design-assets/fonts/subset-Poppins-Regular.woff2"
+	/>
+	<link
+		rel="preload"
+		as="font"
+		crossorigin="anonymous"
+		type="font/woff2"
+		href="/design-assets/fonts/subset-LibreBaskerville-Regular.woff2"
+	/>
+
+	<!-- Website styles -->
+	<link
+		rel="stylesheet"
+		media="screen"
+		href="/design-assets/css/screen-core.css"
+	/>
+
+	<!-- OPTIONAL: environmental state indicators.
+	     Add environmental state indicator classes to the HTML element as soon as possible.
+
+	     NOTE: Scripts with a type of module are parsed only by modern browsers. Means we have Fetch, ES6, etc.
+	-->
+	<script type="module">
+		const htmlElement = document.querySelector('html');
+
+		htmlElement.classList.add('js');
+
+		document.addEventListener('DOMContentLoaded', function() {
+			htmlElement.classList.add('load-complete');
+		});
+	</script>
+
+	<!-- Basic modern features -->
+	<meta name="theme-color"
+	      content="#ffffff"><!-- learn more: https://developer.mozilla.org/en-US/docs/Web/HTML/Element/meta/name/theme-color -->
+	<link rel="icon" href="/design-assets/images/favicon.svg"/><!-- SVG's can be made "darkmode" aware. See the linked example SVG. -->
+</head>
+<body>
+	<a href="#main" class="skiplink uc_hide-visually">Skip navigation and jump to content</a>
+
+	<header>
+		<h1>Native Base</h1>
+	</header>
+
+	<main id="main">
+		<h2>Example form markup</h2>
+		<p>This is a standardised method to mark-up form content.</p>
+
+		<link
+			rel="stylesheet"
+			media="screen"
+			href="/design-assets/css/screen-forms.css"
+		/>
+		<form action="">
+			<div class="fieldset"><!-- Faux fieldset, because it's not possible to apply some styling to real <fieldset> -->
+				<fieldset>
+					<legend>Fieldset Legend</legend>
+
+					<div class="fieldset-error-message">
+						<p>This is where errors with the fieldgroup can be output:</p>
+						<ul>
+							<li>This is an error</li>
+							<li>And so is this</li>
+						</ul>
+					</div>
+
+					<div class="fieldset-instructions">
+						<p>This is where instructions for filling out the form can be added.</p>
+					</div>
+
+					<div class="theOptions">
+						<div class="htmlField">
+							<div class="fieldWrapper">
+								<label>
+									<span>Field Label</span>
+
+									<select name="fieldName">
+										<optgroup label="group label">
+											<option value="1">First option</option>
+											<option value="2" selected>Second option</option>
+											<option value="3">Third option</option>
+										</optgroup>
+
+										<optgroup label="other group label">
+											<option value="4" disabled>Fourth option</option>
+											<option value="5">Fifth option</option>
+										</optgroup>
+									</select>
+								</label>
+							</div>
+						</div>
+					</div>
+				</fieldset>
+			</div>
+		</form>
+	</main>
+
+	<footer>
+		<p>This is the footer.</p>
+	</footer>
+</body>

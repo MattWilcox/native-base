@@ -1,0 +1,17 @@
+### Allow a place to stash related files locally that don't end up in GIT, e.g. source fonts, visuals, etc ###
+/_gitignore/*
+!/_gitignore/.gitignore
+
+### OSX stuff no one wants ###
+.DS_Store
+.AppleDouble
+.LSOverride
+._*
+
+### Vim stuff no one wants ###
+[._]*.s[a-w][a-z]
+[._]s[a-w][a-z]
+*.un~
+Session.vim
+.netrwhist
+*~
