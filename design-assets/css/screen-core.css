@@ -54,6 +54,12 @@
 		list-style: none;
 	}
 
+	/* Ensure any lists without an explicit role attribute display their default bullet styling */
+	ul:not([role='list']),
+	ol:not([role='list']) {
+		margin-inline-start: 2em;
+	}
+
 	/* form resets */
 	input,
 	textarea {
@@ -253,11 +259,6 @@
 			overflow-wrap: break-word; /* if a word needs to split on a long line, split it. */
 		}
 
-		h1,h2,h3,h4,h5,h6 {
-			font-family: var( --font-family-headings );
-			font-weight: bold;
-		}
-
 		sup       { vertical-align: top; font-size: .75em; }
 		sub       { vertical-align: bottom; font-size: .75em; }
 		strong, b { font-weight: bold; }
@@ -377,18 +378,26 @@
 }
 
 @layer design {
-	/* Adjust the font weight when we hit the full "20px" base size */
-	@media screen and (min-width: 1280px) {
-		html {
-			font-weight: 300;
-		}
-		h1,h2,h3,h4,h5,h6 {
-			font-weight: bold;
-		}
-	}
+	/*
+		This is where you would add the CSS for your design.
+		There is nothing here, so that the file can be duplicated easily as a starting place.
+		Instead, the styles for the demo site are stored in `screen-demo.css` and are slotted into the design layer.
+		Just removing that file brings things back to a "standard" blank starting position ready for any project.
+	*/
 }
 
 @layer utilities {
+	.uc_h1,
+	.uc_h2,
+	.uc_h3 {
+		font-family: var( --font-family-headings );
+		font-weight: bold;
+	}
+
+	.uc_h1 { font-size: var(--font-size-heading-large) }
+	.uc_h2 { font-size: var(--font-size-heading) }
+	.uc_h3 { font-size: var(--font-size-heading-small) }
+
 	.font-size\:diminished {    font-size: var(--font-size-diminished) !important; }
 	.font-size\:base {          font-size: var(--font-size-base) !important; }
 	.font-size\:promoted {      font-size: var(--font-size-promoted) !important; }

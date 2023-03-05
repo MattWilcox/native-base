@@ -35,6 +35,11 @@
 		media="screen"
 		href="/design-assets/css/screen-core.css"
 	/>
+	<link
+		rel="stylesheet"
+		media="screen"
+		href="/design-assets/css/screen-demo.css"
+	/>
 
 	<!-- OPTIONAL: environmental state indicators.
 	     Add environmental state indicator classes to the HTML element as soon as possible.
@@ -57,63 +62,104 @@
 	<link rel="icon" href="/design-assets/images/favicon.svg"/><!-- SVG's can be made "darkmode" aware. See the linked example SVG. -->
 </head>
 <body>
-	<a href="#main" class="skiplink uc_hide-visually">Skip navigation and jump to content</a>
+	<a href="#main" class="skiplink uc_hide-visually">Skip to main content</a>
 
 	<header>
-		<h1>Native Base</h1>
+		<p class="uc_h1">Native Base</p>
+
+		<nav
+			aria-label="Site Navigation"
+			class="navSite"
+		>
+			<ul role="list">
+				<li>
+					<a href="/">Home</a>
+				</li>
+				<li>
+					<a href="/kitchen-sink" aria-current="page">Kitchen Sink</a><!-- aria-current should be on the link for the current URL only -->
+				</li>
+			</ul>
+			<!--
+				NOTE:
+				Choices regarding how site navigation is marked-up can have implications on the performance of web projects once a CMS is involved. There's no one-perfect-solution, but it pays to be aware of the impact of mark-up choices.
+
+				Ideally, site navigation and other chunks of "shared content" that appear on multiple pages should only need to be generated once by the CMS. This allows it to be generated once, cached once, and included on all other pages. This is a fast and efficient way to use server resources. Things like an `aria-current="page"` applied in mark-up mean that the navigation becomes unique per-page instead of identical over all pages, and what was a simple resource-light include must now be generated dynamically per page (and possibly cached per page).
+
+				One method to try and get the best of both worlds is to use JS so that the client's browser adds the `aria-current="page"` to the correct element, instead of the server needing to do this. It does mean that an accessibility enhancement becomes reliant on JS being enabled, but this is one of those choices that need to be considered per project.
+			-->
+		</nav>
 	</header>
 
 	<main id="main">
-		<h2>Example form markup</h2>
-		<p>This is a standardised method to mark-up form content.</p>
+		<section>
+			<h1 class="uc_h1">Kitchen Sink</h1>
+			<p>Examples of all of the mark-up patterns.</p>
+		</section>
 
-		<link
-			rel="stylesheet"
-			media="screen"
-			href="/design-assets/css/screen-forms.css"
-		/>
-		<form action="">
-			<div class="fieldset"><!-- Faux fieldset, because it's not possible to apply some styling to real <fieldset> -->
-				<fieldset>
-					<legend>Fieldset Legend</legend>
+		<article>
+			<section>
+				<h2 class="uc_h2">Example form markup</h2>
 
-					<div class="fieldset-error-message">
-						<p>This is where errors with the fieldgroup can be output:</p>
-						<ul>
-							<li>This is an error</li>
-							<li>And so is this</li>
-						</ul>
-					</div>
+				<p>This is a standardised method to mark-up form content.</p>
 
-					<div class="fieldset-instructions">
-						<p>This is where instructions for filling out the form can be added.</p>
-					</div>
+				<link
+					rel="stylesheet"
+					media="screen"
+					href="/design-assets/css/screen-forms.css"
+				/>
+				<form action="">
+					<div class="fieldset"><!-- Faux fieldset, because it's not possible to apply some styling to real <fieldset> -->
+						<fieldset>
+							<legend>Fieldset Legend</legend>
 
-					<div class="theOptions">
-						<div class="htmlField">
-							<div class="fieldWrapper">
-								<label>
-									<span>Field Label</span>
-
-									<select name="fieldName">
-										<optgroup label="group label">
-											<option value="1">First option</option>
-											<option value="2" selected>Second option</option>
-											<option value="3">Third option</option>
-										</optgroup>
-
-										<optgroup label="other group label">
-											<option value="4" disabled>Fourth option</option>
-											<option value="5">Fifth option</option>
-										</optgroup>
-									</select>
-								</label>
+							<div class="fieldset-error-message">
+								<p>This is where errors with the fieldgroup can be output:</p>
+								<ul>
+									<li>This is an error</li>
+									<li>And so is this</li>
+								</ul>
 							</div>
-						</div>
+
+							<div class="fieldset-instructions">
+								<p>This is where instructions for filling out the form can be added.</p>
+							</div>
+
+							<div class="theOptions">
+								<div class="htmlField">
+									<div class="fieldWrapper">
+										<label>
+											<span>Field Label</span>
+
+											<select name="fieldName">
+												<optgroup label="group label">
+													<option value="1">First option</option>
+													<option value="2" selected>Second option</option>
+													<option value="3">Third option</option>
+												</optgroup>
+
+												<optgroup label="other group label">
+													<option value="4" disabled>Fourth option</option>
+													<option value="5">Fifth option</option>
+												</optgroup>
+											</select>
+										</label>
+									</div>
+								</div>
+							</div>
+						</fieldset>
 					</div>
-				</fieldset>
-			</div>
-		</form>
+				</form>
+			</section>
+
+			<aside aria-label="More about forms">
+				<h3 class="uc_h3">More about forms</h3>
+				<ul role="list">
+					<li>
+						<a href="/forms">Forms</a>
+					</li>
+				</ul>
+			</aside>
+		</article>
 	</main>
 
 	<footer>

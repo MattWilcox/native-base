@@ -1,6 +1,6 @@
 # Native Base
 
-Is an opinionated model of HTML, CSS, and Javascript implementations for the front-end of web projects in 2023.
+An opinionated model of HTML, CSS, and Javascript implementations for the front-end of web projects in 2023.
 
 - No frameworks.
 - No build tooling.

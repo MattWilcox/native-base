@@ -1,0 +1,53 @@
+@layer design {
+	/*
+		This file is purely to make the bare-bones example markup here look vaguely acceptable.
+		It is intended to be tossed out, and for you to write your own design styles - partly in `screen-core.css` and partly wherever else makes sense for you.
+
+		Read more about the ideas for CSS organisation here:
+		URL HERE
+	*/
+
+	body > * {
+		padding-inline: var(--gap);
+	}
+	main > * + * {
+		margin-block-start: var(--gap);
+	}
+
+	header {
+		padding-block: var(--gap); margin-block-end: var(--gap);
+		border-block-end: 1px solid currentColor;
+	}
+
+	footer {
+		padding-block: var(--gap); margin-block-start: var(--gap);
+		border-block-start: 1px solid currentColor;
+	}
+
+	.navSite ul {
+		display: flex; gap: var(--gap);
+	}
+
+	a[aria-current="page"] {
+		pointer-events: none;
+		text-decoration: underline;
+	}
+
+	aside {
+		border-radius: 0.5rem; padding: var(--gap); border: 1px dashed currentColor;
+	}
+
+	article:has( > section + aside ) { /* Firefox doesn't have native support yet... */
+		display: grid; grid-template-columns: 3fr 1fr; gap: calc(2 * var(--gap));
+	}
+
+	/* Adjust the font weight when we hit the full "20px" base size */
+	@media screen and (min-width: 1280px) {
+		html {
+			font-weight: 300;
+		}
+		h1,h2,h3,h4,h5,h6 {
+			font-weight: bold;
+		}
+	}
+}
