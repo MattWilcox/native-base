@@ -1,3 +1,14 @@
+@layer base {
+	:root {
+		/* Form related */
+		--input-padding:           0.5em;
+		--input-border-width:      2px;
+		--input-border-radius:     0.25em;
+		--input-border-colour:     hsl(var(--black) / 0.1);
+		--caret-colour:            hsl(var(--ui-green));
+	}
+}
+
 @layer design {
 	/*
 		# Form management
@@ -13,21 +24,15 @@
 
 	label {
 		display: block;
-
-		& > span {
-			font-size: 0.875em; text-transform: uppercase;
-		}
-
-		&:not(.boolean) > span {
-			display: block; margin-bottom: 0.5em;
-		}
-
-		&.boolean {
-			& span,
-			& input {
-				display: inline-block;
-			}
-		}
+	}
+	label > span {
+		font-size: 0.875em; text-transform: uppercase;
+	}
+	label:not(.boolean) > span {
+		display: block; margin-bottom: 0.5em;
+	}
+	label.boolean where:(span, input) {
+		display: inline-block;
 	}
 
 	.legend {
@@ -52,14 +57,6 @@
 		transition   : all var(--fast);
 		caret-color  : var(--input-caret-colour);
 		color        : initial;
-
-		/*
-			&:focus,
-			&:focus-visible {
-				border-color: currentColor;
-				outline: 0 !important;
-			}
-		*/
 	}
 
 	select {

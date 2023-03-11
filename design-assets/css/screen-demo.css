@@ -66,6 +66,18 @@
 		URL HERE
 	*/
 
+	.skiplink {
+		position: absolute; inset: 0 0 auto 0;
+		padding-block: 0.5em;
+		background-color: hsl( var(--black) ); color: hsl( var(--white) );
+		text-decoration: underline;
+		clip-path: polygon(0 0, 100% 0, 100% 0%, 0 0%);
+		transition: clip-path, var(--very-fast);
+	}
+	.skiplink:focus {
+		clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%);
+	}
+
 	body > * {
 		padding-inline: var(--gap);
 	}

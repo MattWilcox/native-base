@@ -1,25 +1,30 @@
 @layer reset, base, design, utilities;
 /*
+	# SCREEN-CORE.CSS
+
+		- This file is _always_ loaded, it's referenced in the <head> of all pages.
+		- It should therefor contain styles that are _very likely_ to be used on all pages, but avoid styles that are unlikely to appear on all pages. Such styles should belong in their own stylesheet.
+
 	# CSS Cascade Layers
 
-	NOTES:
-	Layers should be declared before all other CSS.
+		NOTES:
+		Layers should be declared before all other CSS.
 
-	REFERENCES:
-	- https://developer.mozilla.org/en-US/docs/Learn/CSS/Building_blocks/Cascade_layers
-	- https://css-tricks.com/css-cascade-layers/
+		REFERENCES:
+		- https://developer.mozilla.org/en-US/docs/Learn/CSS/Building_blocks/Cascade_layers
+		- https://css-tricks.com/css-cascade-layers/
 
-	Reset:
-		Undo inconsistent default browsers styles, so there are no differences between them.
+		Reset:
+			Undo inconsistent default browsers styles, so there are no differences between them.
 
-	Base:
-		Base styles for "default" elements and "core level" markup. E.g., Fonts, Headings, how a <p> or <em> etc look by default, or how a basic form looks - without any component or page specific over-rides.
+		Base:
+			Base styles for "default" elements and "core level" markup. E.g., Fonts, Headings, how a <p> or <em> etc look by default, or how a basic form looks - without any component or page specific over-rides.
 
-	Design:
-		The actual design of the site. How components look, how things are laid out, page specific styling, etc.
+		Design:
+			The actual design of the site. How components look, how things are laid out, page specific styling, etc.
 
-	Utilities:
-		For the rare case where it makes sense, utility classes should override everything else. e.g., heading styles should _not_ be mapped to heding level, but it's handy to map to a class given how stable heading style is over viewport sizes.
+		Utilities:
+			For the rare case where it makes sense, utility classes should override everything else. e.g., heading styles should _not_ be mapped to heding level, but it's handy to map to a class given how stable heading style is over viewport sizes.
 */
 
 @layer reset {
@@ -163,6 +168,7 @@
 			--row-padding-inline:      var(--gap);
 
 			/* Animation speeds */
+			--very-fast:               0.15s;
 			--fast:                    0.3s;
 			--slow:                    0.6s;
 			--very-slow:               1.3s;
@@ -185,13 +191,6 @@
 			--font-family-primary   : Poppins, "Helvetica Neue", Helvetica, Arial, sans-serif;
 			--font-family-headings  : "Libre Baskerville", "Helvetica Neue", Helvetica, Arial, sans-serif;
 			--font-family-helvetica : "Helvetica Neue", Helvetica, Arial, sans-serif;
-
-			/* Form related */
-			--input-padding:           0.5em;
-			--input-border-width:      2px;
-			--input-border-radius:     0.25em;
-			--input-border-colour:     hsl(var(--black) / 0.1);
-			--caret-colour:            hsl(var(--ui-green));
 
 			/* Colour / theme related (hsl). I can't wait for Color Module Level 5 so this can be re-worked.
 				WAITING FOR... https://12daysofweb.dev/2022/css-color-spaces-relative-color-syntax/
