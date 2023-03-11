@@ -10,16 +10,16 @@
 	- https://css-tricks.com/css-cascade-layers/
 
 	Reset:
-		Ensure all browsers start from the same basic styles, so there are no differences between them.
+		Undo inconsistent default browsers styles, so there are no differences between them.
 
 	Base:
-		Styles "default" elements and "core level" markup. E.g., Fonts, Headings, how a <p> or <em> etc look by default, or how a basic form looks - without any page or component specific over-rides.
+		Base styles for "default" elements and "core level" markup. E.g., Fonts, Headings, how a <p> or <em> etc look by default, or how a basic form looks - without any component or page specific over-rides.
 
 	Design:
-		The actual design of the site.
+		The actual design of the site. How components look, how things are laid out, page specific styling, etc.
 
 	Utilities:
-		For the rare case where it makes sense, utility classes should override everything else.
+		For the rare case where it makes sense, utility classes should override everything else. e.g., heading styles should _not_ be mapped to heding level, but it's handy to map to a class given how stable heading style is over viewport sizes.
 */
 
 @layer reset {
@@ -28,58 +28,50 @@
 		box-sizing : border-box;
 	}
 
-	/* Eric Meyer had it right all those years ago, with margins and fonts */
-	html, body, div, span, applet, object, iframe,
-	h1, h2, h3, h4, h5, h6, p, blockquote, pre,
-	a, abbr, acronym, address, big, cite, code,
-	del, dfn, em, img, ins, kbd, q, s, samp,
-	small, strike, strong, sub, sup, tt, var,
-	b, u, i, center,
-	dl, dt, dd, ol, ul, li,
-	fieldset, form, label, legend,
-	table, caption, tbody, tfoot, thead, tr, th, td,
-	article, aside, canvas, details, embed,
-	figure, figcaption, footer, header, hgroup,
-	menu, nav, output, ruby, section, summary,
-	time, mark, audio, video, dialog {
-		margin: 0; padding: 0; border: 0;
-		font-size: 100%; font: inherit; }
+	/* Remove inconsistent default margins, paddings, borders. Make everything inherit font styles. */
+	* {
+		margin: 0; padding: 0; border-width: 0;
+		font-size: 100%; font: inherit;
+		background-repeat: no-repeat;
+	}
+
+	html {
+		text-size-adjust: none;              /* Text size only controlled by font-size */
+		-webkit-font-smoothing: antialiased; /* This is a good default in a modern Retina world */
+		scroll-behavior: smooth;             /* Default to smooth scrolling (disabled conditionally later, for a11y) */
+	}
 
 	/* Any CSS that would remove the bullet or number indicators of a list’s items will also remove the semantics.
 	   REFERENCE: https://www.scottohara.me/blog/2019/01/12/lists-and-safari.html
 
 	   So here, we only allow visually removing a bullet if the markup explicitly adds back the list semantics through having a role='list' property value */
-	ul[role='list'],
-	ol[role='list'] {
+	:where(ul, ol)[role='list'] {
 		list-style: none;
 	}
-
-	/* Ensure any lists without an explicit role attribute display their default bullet styling */
-	ul:not([role='list']),
-	ol:not([role='list']) {
+	:where(ul, ol):not([role='list']) { /* Ensure any lists without an explicit role attribute display their default bullet styling */
 		margin-inline-start: 2em;
 	}
 
 	/* form resets */
-	input,
-	textarea {
-		border: 0; }
-	button, input, select, textarea {
+	:where(button, input, select, textarea) {
 		color: inherit;
 		font-family: inherit;
 		font-style: inherit;
 		font-weight: inherit;
 	}
-	button {
-		-webkit-appearance: none; -moz-appearance: none; appearance: none;
-		display: inline-block; border: none;
+	:where(button) {
+		appearance: none;                         /* Don't use the OS's theming */
+		display: inline-block;
 		cursor: pointer;
-		touch-action: manipulation; /* faster taps as long as we're not zooming etc */
+		touch-action: manipulation;               /* faster taps as long as we're not zooming etc */
 		-webkit-tap-highlight-color: transparent; /* No, Safari */
+	}
+	:where([disabled]) { /* if anything is marked as disabled, the cursor should reflect that status */
+		cursor: not-allowed;
 	}
 
 	/* Remove all animations, transitions and smooth scroll for people that prefer not to see them */
-	@media (prefers-reduced-motion: reduce) {
+	@media (prefers-reduced-motion) {
 		html:focus-within {
 			scroll-behavior: auto;
 		}
@@ -87,10 +79,10 @@
 		*,
 		*::before,
 		*::after {
-			animation-duration: 0.01ms !important;
-			animation-iteration-count: 1 !important;
-			transition-duration: 0.01ms !important;
-			scroll-behavior: auto !important;
+			animation-duration:        0.01ms !important;
+			animation-iteration-count: 1      !important;
+			transition-duration:       0.01ms !important;
+			scroll-behavior:           auto   !important;
 		}
 	}
 
@@ -117,60 +109,32 @@
 
 @layer base {
 	/* # Font Imports */
+		/* .e.,g...
+
 		@font-face {
 			font-family: 'Poppins';
 			src: url('/design-assets/fonts/subset-Poppins-Regular.woff2') format('woff2');
 			font-weight: normal; font-style: normal;
 			font-display: swap;
 		}
+		*/
 
-		@font-face {
-			font-family: 'Poppins';
-			src: url('/design-assets/fonts/subset-Poppins-Bold.woff2') format('woff2');
-			font-weight: bold; font-style: normal;
-			font-display: swap;
+	/* # Focus management */
+		*:focus { /* fallback for older browsers that don't support 'focus-visible' */
+			outline: max(2px, 0.2em) solid currentColor !important;
+			outline-offset: 0.25em; z-index: 1000;
 		}
 
-		@font-face {
-			font-family: 'Poppins';
-			src: url('/design-assets/fonts/subset-Poppins-Italic.woff2') format('woff2');
-			font-weight: normal; font-style: italic;
-			font-display: swap;
-		}
+		@supports selector(:focus-visible) {
+			*:focus { /* Do nothing with 'focus', as that activates on click as well as keyboard */
+				outline: none !important;
+				text-decoration: none;
+			}
 
-		@font-face {
-			font-family: 'Poppins';
-			src: url('/design-assets/fonts/subset-Poppins-Light.woff2') format('woff2');
-			font-weight: 300; font-style: normal;
-			font-display: swap;
-		}
-
-		@font-face {
-			font-family: 'Poppins';
-			src: url('/design-assets/fonts/subset-Poppins-LightItalic.woff2') format('woff2');
-			font-weight: 300; font-style: italic;
-			font-display: swap;
-		}
-
-		@font-face {
-			font-family: 'Libre Baskerville';
-			src: url('/design-assets/fonts/subset-LibreBaskerville-Regular.woff2') format('woff2');
-			font-weight: normal; font-style: normal;
-			font-display: swap;
-		}
-
-		@font-face {
-			font-family: 'Libre Baskerville';
-			src: url('/design-assets/fonts/subset-LibreBaskerville-Italic.woff2') format('woff2');
-			font-weight: normal; font-style: italic;
-			font-display: swap;
-		}
-
-		@font-face {
-			font-family: 'Libre Baskerville';
-			src: url('/design-assets/fonts/subset-LibreBaskerville-Bold.woff2') format('woff2');
-			font-weight: bold; font-style: normal;
-			font-display: swap;
+			*:focus-visible { /* Let the browser decide when things "should" have focus - e.g., keyboard, not click */
+				outline: max(2px, 0.2em) solid currentColor !important;
+				outline-offset: 0.25em; z-index: 1000;
+			}
 		}
 
 	/* # CSS Custom Properties
@@ -190,8 +154,8 @@
 	*/
 		:root {
 			/* Generic measures */
-			--gap:                     var(--font-size-base);
-			--ps-letter-spacing:       40; /* the photoshop value on "letter spacing" for VCA's habitual uppercase text styles */
+			--gap:            var(--font-size-base);
+			--letter-spacing: 0.025em;
 
 			/* measures intended for "row" layout rather than component layout */
 			--row-width-max:           1280px;
@@ -229,7 +193,9 @@
 			--input-border-colour:     hsl(var(--black) / 0.1);
 			--caret-colour:            hsl(var(--ui-green));
 
-			/* Colour / theme related (hsl) */
+			/* Colour / theme related (hsl). I can't wait for Color Module Level 5 so this can be re-worked.
+				WAITING FOR... https://12daysofweb.dev/2022/css-color-spaces-relative-color-syntax/
+			*/
 			--ui-green:                103 46% 48%;
 			--ui-red:                  17 46% 48%;
 			--black:                   0 0% 0%;
@@ -242,117 +208,88 @@
 		html {
 			background-color: hsl( var(--white) );
 			color           : hsl( var(--black) );
-			accent-color    : var(--brand-colour, auto);  /* https://developer.mozilla.org/en-US/docs/Web/CSS/accent-color */
-			text-size-adjust: none;
-			-webkit-font-smoothing: antialiased; /* This is a good default in a modern Retina world */
-			font-size: var(--font-size-root);
+			accent-color    : var(--brand-colour, auto); /* https://developer.mozilla.org/en-US/docs/Web/CSS/accent-color */
+			font-size       : var(--font-size-root);
 		}
 
-		body,	input, select, textarea {
+		:where(body) {
 			font-size: var(--font-size-base, 100%);
 			line-height: 1.375;
 			font-family: var(--font-family-primary);
-			hyphens: none; /* hyphenations now work! http://www.quirksmode.org/blog/archives/2012/11/hyphenation_wor.html */
+			hyphens: none;
 		}
 
-		p, h1, h2, h3, h4, h5, h6 {
+		:where(p, h1, h2, h3, h4, h5, h6) {
 			overflow-wrap: break-word; /* if a word needs to split on a long line, split it. */
 		}
 
 		sup       { vertical-align: top; font-size: .75em; }
 		sub       { vertical-align: bottom; font-size: .75em; }
-		strong, b { font-weight: bold; }
-		em, i     { font-style: italic; }
+		strong    { font-weight: bold; }
+		em        { font-style: italic; }
 		code      { font: .85em/1 Courier, monospace; }
 
 		a:link    { -webkit-tap-highlight-color: hsl( var(--ui-green) ); text-decoration: none; }
 		a:link,
 		a:visited { color: inherit; }
 		a:hover   { color: hsl( var(--ui-green, 120 100% 47%) ); }
-		a:focus   { outline-color: transparent; } /* not outline: none; as that doesn't support accessible colour scheme. */
-		a:active  { outline-color: transparent; }
+		a:focus,
+		a:active  { outline-color: transparent; } /* Not "0 outline" as that wouldn't be accessible for high contrast etc */
 
 		[id] {
 			scroll-margin-top: 5vh; /* ensure there's a bit of headroom on all possible scroll targets */
 		}
 
-	/* # Components */
-		details {
-			& > summary {
+	/* # Basic Components */
+		/* ## Details */
+			details > summary {
 				list-style-type: none;
-
-				&::-webkit-details-marker {
-					display: none;
-				}
-				&:focus {
-					text-decoration: none;
-				}
-
 				padding: 0.5em var(--gap) 0.25em 0; border: 1px solid transparent; border-bottom-color: currentColor;
-				background: transparent url(/dist/svg/plus.svg) 100% 5px no-repeat;
+				background: transparent url(/design-assets/images/plus.svg) 100% 5px no-repeat;
 				cursor: pointer;
 			}
-
-			& .content {
+			details > summary::-webkit-details-marker {
+				display: none;
+			}
+			details > summary:focus {
+				text-decoration: none;
+			}
+			details[open] > summary {
+				background: transparent url(/design-assets/images/minus.svg) 100% 5px no-repeat;
+			}
+			details .content {
 				padding: var(--gap, 1rem) 0;
 			}
 
-			&[open] {
-				& > summary {
-					background: transparent url(/dist/svg/minus.svg) 100% 5px no-repeat;
-				}
+		/* ## Dialog */
+			dialog.modal {
+				position: sticky; inset: 0;
+				max-width: 40ch; border: 0; padding: var(--gap);
+				background-color: hsl( var(--black) / 0.2 );
+				box-shadow: 0 0 var( --gap ) hsl( var(--black) / 0.6 );
+				backdrop-filter: blur(10px);
 			}
-		}
-
-		dialog.modal {
-			position: sticky; inset: 0;
-			max-width: 40ch; border: 0; padding: var(--gap);
-			background-color: hsl( var(--black) / 0.2 );
-			box-shadow: 0 0 var( --gap ) hsl( var(--black) / 0.6 );
-			backdrop-filter: blur(10px);
-		}
-
-	/* # Focus management */
-		*:focus {
-			outline: max(2px, 0.2em) solid currentColor !important;
-			outline-offset: 0.25em; z-index: 1000;
-		}
-
-		@supports selector(:focus-visible) {
-			*:focus {
-				outline: none !important;
-				text-decoration: none;
-			}
-
-			*:focus-visible {
-				outline: max(2px, 0.2em) solid currentColor !important;
-				outline-offset: 0.25em; z-index: 1000;
-			}
-		}
 
 	/* # Image management */
 		img                           { max-width: 100%; }
-		#target_hilight               { position : absolute; }
 		a img                         { margin: 0; }
 		img[data-object-fit="contain"] { object-fit: contain; }
 		img[data-object-fit="cover"]   { object-fit: cover; }
 
 		picture {
 			display: flex;
-
-			& img {
-				width: 100%; height: 100%;
-			}
+		}
+		picture > img {
+			width: 100%; height: 100%;
 		}
 
-		/* loading spinner bg on picture */
+		/* loading spinner bg on <picture> elements */
 			picture {
 				background-color: hsl( var(--black) / 0.2 );
 				position: relative;
-
-				& img {
-					z-index: 1;
-				}
+			}
+			picture > img {
+				z-index: 1;
 			}
 			picture:before {
 				position: absolute; left: 50%; top: 50%; transform: translate(-50%,-50%);
@@ -367,9 +304,7 @@
 			}
 
 		/* Only render images when in the viewport, we can assume any image inside <header> is already in the viewport
-
-			REFERENCE:
-			https://www.industrialempathy.com/posts/image-optimizations/
+			REFERENCE: https://www.industrialempathy.com/posts/image-optimizations/
 		*/
 			main img,
 			footer img {
@@ -390,20 +325,14 @@
 	.uc_h1,
 	.uc_h2,
 	.uc_h3 {
-		font-family: var( --font-family-headings );
-		font-weight: bold;
+		font-family:    var(--font-family-headings);
+		font-weight:    bold;
+		letter-spacing: var(--letter-spacing);
 	}
 
 	.uc_h1 { font-size: var(--font-size-heading-large) }
 	.uc_h2 { font-size: var(--font-size-heading) }
 	.uc_h3 { font-size: var(--font-size-heading-small) }
-
-	.font-size\:diminished {    font-size: var(--font-size-diminished) !important; }
-	.font-size\:base {          font-size: var(--font-size-base) !important; }
-	.font-size\:promoted {      font-size: var(--font-size-promoted) !important; }
-	.font-size\:heading-small { font-size: var(--font-size-heading-small) !important; }
-	.font-size\:heading {       font-size: var(--font-size-heading) !important; }
-	.font-size\:heading-large { font-size: var(--font-size-heading-large) !important; }
 
 	:where(.uc_uppercase) {
 		text-transform: uppercase;
@@ -432,14 +361,11 @@
 		display: inline-flex; align-items: center; gap: calc( var(--gap) / 2 );
 		padding: calc( var(--gap) / 2 ); border-radius: 0.5em;
 		background-color: hsl( var(--brand-colour) / 0.25 );
-		text-transform: uppercase;
-		letter-spacing: calc( (var(--ps-letter-spacing, 40) / 1000) * 1em );
-		font-size: 0.875em;
+		font-size: 0.875em; text-transform: uppercase; letter-spacing: calc( (var(--ps-letter-spacing, 40) / 1000) * 1em );
 		color: hsl( var(--white) ) !important;
-		transition: all var(--fast);
-
-		&:hover {
-			background-color: hsl( var(--brand-colour) / 1 );
-		}
+		transition: background-color, var(--fast);
+	}
+	:where(.uc_button):hover {
+		background-color: hsl( var(--brand-colour) / 1 );
 	}
 }

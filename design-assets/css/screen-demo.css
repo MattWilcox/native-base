@@ -1,6 +1,65 @@
+@layer base {
+	/* # Font Imports */
+	@font-face {
+		font-family: 'Poppins';
+		src: url('/design-assets/fonts/subset-Poppins-Regular.woff2') format('woff2');
+		font-weight: normal; font-style: normal;
+		font-display: swap;
+	}
+
+	@font-face {
+		font-family: 'Poppins';
+		src: url('/design-assets/fonts/subset-Poppins-Bold.woff2') format('woff2');
+		font-weight: bold; font-style: normal;
+		font-display: swap;
+	}
+
+	@font-face {
+		font-family: 'Poppins';
+		src: url('/design-assets/fonts/subset-Poppins-Italic.woff2') format('woff2');
+		font-weight: normal; font-style: italic;
+		font-display: swap;
+	}
+
+	@font-face {
+		font-family: 'Poppins';
+		src: url('/design-assets/fonts/subset-Poppins-Light.woff2') format('woff2');
+		font-weight: 300; font-style: normal;
+		font-display: swap;
+	}
+
+	@font-face {
+		font-family: 'Poppins';
+		src: url('/design-assets/fonts/subset-Poppins-LightItalic.woff2') format('woff2');
+		font-weight: 300; font-style: italic;
+		font-display: swap;
+	}
+
+	@font-face {
+		font-family: 'Libre Baskerville';
+		src: url('/design-assets/fonts/subset-LibreBaskerville-Regular.woff2') format('woff2');
+		font-weight: normal; font-style: normal;
+		font-display: swap;
+	}
+
+	@font-face {
+		font-family: 'Libre Baskerville';
+		src: url('/design-assets/fonts/subset-LibreBaskerville-Italic.woff2') format('woff2');
+		font-weight: normal; font-style: italic;
+		font-display: swap;
+	}
+
+	@font-face {
+		font-family: 'Libre Baskerville';
+		src: url('/design-assets/fonts/subset-LibreBaskerville-Bold.woff2') format('woff2');
+		font-weight: bold; font-style: normal;
+		font-display: swap;
+	}
+}
+
 @layer design {
 	/*
-		This file is purely to make the bare-bones example markup here look vaguely acceptable.
+		This file is purely to make the bare-bones example markup look vaguely acceptable.
 		It is intended to be tossed out, and for you to write your own design styles - partly in `screen-core.css` and partly wherever else makes sense for you.
 
 		Read more about the ideas for CSS organisation here:
@@ -25,7 +84,7 @@
 	}
 
 	.navSite ul {
-		display: flex; gap: var(--gap);
+		display: flex; flex-wrap: wrap; gap: var(--gap);
 	}
 
 	a[aria-current="page"] {
@@ -46,7 +105,7 @@
 		html {
 			font-weight: 300;
 		}
-		h1,h2,h3,h4,h5,h6 {
+		:where(h1,h2,h3,h4,h5,h6) {
 			font-weight: bold;
 		}
 	}

@@ -81,9 +81,9 @@
 			</ul>
 			<!--
 				NOTE:
-				Choices regarding how site navigation is marked-up can have implications on the performance of web projects once a CMS is involved. There's no one-perfect-solution, but it pays to be aware of the impact of mark-up choices.
+				Choices regarding how site navigation is marked-up can have implications on the performance of web projects once a CMS is involved.
 
-				Ideally, site navigation and other chunks of "shared content" that appear on multiple pages should only need to be generated once by the CMS. This allows it to be generated once, cached once, and included on all other pages. This is a fast and efficient way to use server resources. Things like an `aria-current="page"` applied in mark-up mean that the navigation becomes unique per-page instead of identical over all pages, and what was a simple resource-light include must now be generated dynamically per page (and possibly cached per page).
+				Site navigation may be editable by someone in the CMS. Ideally, site navigation and other chunks of mark-up that are identical between multiple pages should be generated only once by the CMS. This allows it to be generated once, cached once, and included on all other pages. This is a fast and efficient way to use server resources. However, things like an `aria-current="page"` applied in mark-up for the navigation mean that the navigation itself becomes unique per-page instead of identical over all pages, and what was a simple resource-light include must now be generated dynamically per page (and possibly cached per page).
 
 				One method to try and get the best of both worlds is to use JS so that the client's browser adds the `aria-current="page"` to the correct element, instead of the server needing to do this. It does mean that an accessibility enhancement becomes reliant on JS being enabled, but this is one of those choices that need to be considered per project.
 			-->
