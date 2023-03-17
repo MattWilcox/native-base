@@ -4,8 +4,10 @@
 	<meta charset="utf-8" />
 	<meta name="viewport"
 	      content="width=device-width,initial-scale=1" />
+	<meta name="description"
+	      content="Accessible Markup Patterns" />
 	<!-- LEARN MORE:
-	     What can go in the head, and why MUST those two go first?
+	     What can go in the head, and why MUST meta and viewport go first, and what do they do?
 	     https://github.com/joshbuchea/HEAD#recommended-minimum
 	-->
 
@@ -39,21 +41,21 @@
 		rel="stylesheet"
 		media="screen"
 		href="/design-assets/css/screen-demo.css"
-	/>
+	/><!-- this is a separate stylesheet purely for organisation; in real projects the content of this file should likely go in the screen-core.css file -->
 
 	<!-- OPTIONAL: environmental state indicators.
-	     Add environmental state indicator classes to the HTML element as soon as possible.
+	     Add environmental state indicators to the HTML element as soon as possible.
 
 	     NOTE: Scripts with a type of module are parsed only by modern browsers. Means we have Fetch, ES6, etc.
 	-->
 	<script type="module">
 		const htmlElement = document.querySelector('html');
 
-		htmlElement.classList.add('js');
+		htmlElement.dataset.jsAvailable = true;
 
-		document.addEventListener('DOMContentLoaded', function() {
-			htmlElement.classList.add('load-complete');
-		});
+		document.onreadystatechange = (e) => {
+			htmlElement.dataset.domReadyState = e.target.readyState;
+		};
 	</script>
 
 	<!-- Basic modern features -->
@@ -62,16 +64,16 @@
 	<link rel="icon" href="/design-assets/images/favicon.svg"/><!-- SVG's can be made "darkmode" aware. See the linked example SVG. -->
 </head>
 <body>
-	<a href="#main" class="skiplink">Skip to main content</a>
+	<a href="#main" class="skiplink">Skip to main content</a><!-- A skiplink allows screen reader users to go straight to content, thus avoiding having to hear the header being read out. -->
 
 	<header>
-		<p class="uc_h1">Native Base</p>
+		<p class="uc_h1">Native Base</p><!-- Actual h1 elements should always be the title of the document, and only one per document. Here we use a Utility Class to give the _visual style_ of a h1, but the semantics of normal text. -->
 
 		<nav
 			aria-label="Site Navigation"
 			class="navSite"
-		>
-			<ul role="list">
+		><!-- aria-label is used to explicitly describe what navigation this is, for screen readers. -->
+			<ul role="list"><!-- Lists that use CSS to remove bullets MUST have role="list" to retain their meaning in screen readers. -->
 				<li>
 					<a href="/">Home</a>
 				</li>
@@ -91,13 +93,13 @@
 	</header>
 
 	<main id="main">
-		<section>
+		<hgroup><!-- Used to group a heading with any secondary content, such as subheadings / taglines / timestamps -->
 			<h1 class="uc_h1">Kitchen Sink</h1>
 			<p>Examples of all of the mark-up patterns. Tons of in-line comments. View the source.</p>
-		</section>
+		</hgroup>
 
-		<article>
-			<section>
+		<article><!-- articles are discrete "islands" of content that make sense out of context. -->
+			<section><!-- <section> is used for generic blocks of content that have a heading. -->
 				<h2 class="uc_h2">Example form markup</h2>
 
 				<p>This is a standardised method to mark-up form content.</p>
@@ -106,52 +108,74 @@
 					rel="stylesheet"
 					media="screen"
 					href="/design-assets/css/screen-forms.css"
-				/>
-				<form action="">
-					<div class="fieldset"><!-- Faux fieldset, because it's not possible to apply some styling to real <fieldset> -->
-						<fieldset>
+				/><!-- For more info on why this is here, read the article /css-loading-strategy -->
+				<form
+					action=""
+					enctype="multipart/form-data"
+				>
+					<fieldset>
+						<div class="fieldset">
+							<!--
+								A "faux fieldset" is used as the immediate child of <fieldset> only because browser implementation issues mean that <fieldset> itself can not reliably have display:flex or display:grid set on them.
+
+								REFERENCE: https://developer.mozilla.org/en-US/docs/Web/HTML/Element/fieldset
+							-->
 							<legend>Fieldset Legend</legend>
 
-							<div class="fieldset-error-message">
+							<section class="fieldset-error-message">
+								<h2>Error</h2>
 								<p>This is where errors with the fieldgroup can be output:</p>
 								<ul>
 									<li>This is an error</li>
 									<li>And so is this</li>
 								</ul>
-							</div>
+							</section>
 
-							<div class="fieldset-instructions">
+							<section class="fieldset-instructions">
+								<h2>Instructions</h2>
 								<p>This is where instructions for filling out the form can be added.</p>
-							</div>
+							</section>
 
-							<div class="theOptions">
-								<div class="htmlField">
+							<div class="theFields"><!-- <div> is used only for styling hooks, where there are no semantics -->
+								<section class="field">
 									<div class="fieldWrapper">
-										<label>
-											<span>Field Label</span>
+										<label for="fieldName">Field Label</label>
 
-											<select name="fieldName">
-												<optgroup label="group label">
-													<option value="1">First option</option>
-													<option value="2" selected>Second option</option>
-													<option value="3">Third option</option>
-												</optgroup>
+										<select name="fieldName">
+											<optgroup label="group label">
+												<option value="1">First option</option>
+												<option value="2" selected>Second option</option>
+												<option value="3">Third option</option>
+											</optgroup>
 
-												<optgroup label="other group label">
-													<option value="4" disabled>Fourth option</option>
-													<option value="5">Fifth option</option>
-												</optgroup>
-											</select>
-										</label>
+											<optgroup label="other group label">
+												<option value="4" disabled>Fourth option</option>
+												<option value="5">Fifth option</option>
+											</optgroup>
+										</select>
 									</div>
-								</div>
+
+									<section class="field-error-message">
+										<h2>Error</h2>
+										<p>This is where errors with the fieldgroup can be output:</p>
+										<ul>
+											<li>This is an error</li>
+											<li>And so is this</li>
+										</ul>
+									</section>
+
+									<section class="field-instructions">
+										<h2>Instructions</h2>
+										<p>This is where instructions for filling out the form can be added.</p>
+									</section>
+								</section>
 							</div>
 						</fieldset>
 					</div>
 				</form>
 			</section>
 
-			<aside aria-label="More about forms">
+			<aside aria-label="More about forms"><!-- aside represents content indirectly related to the main block -->
 				<h3 class="uc_h3">More about forms</h3>
 				<ul role="list">
 					<li>

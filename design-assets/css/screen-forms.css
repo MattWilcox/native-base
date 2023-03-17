@@ -90,9 +90,7 @@
 			}
 		}
 
-		& [class^='fieldset-'] {
-			max-width: 52ch;
-
+		& [class^='field'] {
 			& > * + * {
 				margin-block-start: 1em;
 			}
@@ -102,7 +100,7 @@
 			}
 		}
 
-		& .fieldset-error-message {
+		& :where(.fieldset-error-message, .field-error-message) {
 			padding: 1rem 0.5rem 1em 3.5em; border-radius: 0.5rem 0.5rem; border: 0.15em solid red;
 			background-image:
 				url(/design-assets/images/exclamation-triangle.svg),
@@ -117,7 +115,7 @@
 				no-repeat,
 				no-repeat;
 		}
-		& .fieldset-instructions {
+		& :where(.fieldset-instructions, .field-instructions) {
 			padding: 1rem 0.5rem 1em 3.5em; border-radius: 0.5rem 0.5rem; border: 0.15em solid blue;
 			background-image:
 				url(/design-assets/images/information-circle.svg),
@@ -133,7 +131,7 @@
 				no-repeat;
 		}
 
-		& > div {
+		& > * {
 			margin-top: var(--gap);
 		}
 
