@@ -3,7 +3,7 @@
 	# SCREEN-CORE.CSS
 
 		- This file is _always_ loaded, it's referenced in the <head> of all pages.
-		- It should therefor contain styles that are _very likely_ to be used on all pages, but avoid styles that are unlikely to appear on all pages. Such styles should belong in their own stylesheet.
+		- It should therefor contain styles that are _very likely_ to be used on the majority of pages, and avoid styles for things that are unlikely to appear on many pages. Those styles should belong in their own stylesheet, and be loaded only when needed.
 
 	# CSS Cascade Layers
 
@@ -24,7 +24,7 @@
 			The actual design of the site. How components look, how things are laid out, page specific styling, etc.
 
 		Utilities:
-			For the rare case where it makes sense, utility classes should override everything else. e.g., heading styles should _not_ be mapped to heding level, but it's handy to map to a class given how stable heading style is over viewport sizes.
+			For the rare case where it makes sense, utility classes should override everything else. e.g., heading styles should _not_ be mapped to HTML heading level, but it's handy to map to a class given how stable heading style is over viewport sizes.
 */
 
 @layer reset {
@@ -239,7 +239,7 @@
 			scroll-margin-top: 5vh; /* ensure there's a bit of headroom on all possible scroll targets */
 		}
 
-	/* # Basic Components */
+	/* # HTML "Components" - some newer HTML stuff are actually mark-up patterns more than individual elements */
 		/* ## Details */
 			details > summary {
 				list-style-type: none;
@@ -327,6 +327,7 @@
 		font-family:    var(--font-family-headings);
 		font-weight:    bold;
 		letter-spacing: var(--letter-spacing);
+		text-wrap: balance;
 	}
 
 	.uc_h1 { font-size: var(--font-size-heading-large) }
