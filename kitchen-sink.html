@@ -93,7 +93,7 @@
 
 			<search role="search" aria-label="Site wide"><!-- search is a new tag for 2023 https://html.spec.whatwg.org/multipage/grouping-content.html#the-search-element -->
 				<form action="/search-results">
-					<div class="htmlField"><!-- Why this markup? Read LINK -->
+					<div class="formField"><!-- Why this markup? Read LINK -->
 						<div class="fieldWrapper">
 							<label for="searchTerm">
 								Search
@@ -166,22 +166,24 @@
 							-->
 							<legend>Fieldset Legend</legend>
 
-							<section class="ui-instructions">
-								<h2>Fieldset Instructions</h2>
-								<p>This is where instructions for filling out the fieldset can be added. For example:</p>
-								<ul>
-									<li>When completing this field-group, remember the details should be for how old you will be when the event starts, and not how old you are today.</li>
-								</ul>
-							</section>
+							<div class="fieldset-context">
+								<section class="ui-instructions">
+									<h2>Fieldset Instructions</h2>
+									<p>This is where instructions for filling out the fieldset can be added. For example:</p>
+									<ul>
+										<li>When completing this field-group, remember the details should be for how old you will be when the event starts, and not how old you are today.</li>
+									</ul>
+								</section>
 
-							<section class="ui-error-message">
-								<h2>Fieldset Error</h2>
-								<p>This is where errors with the fieldset can be output.</p>
-								<p>For example, the individual fields may be valid, but the combination of values may not be considered valid:</p>
-								<ul>
-									<li>The "Start Date" should be earlier than the "End Date".</li>
-								</ul>
-							</section>
+								<section class="ui-error-message">
+									<h2>Fieldset Error</h2>
+									<p>This is where errors with the fieldset can be output.</p>
+									<p>For example, the individual fields may be valid, but the combination of values may not be considered valid:</p>
+									<ul>
+										<li>The "Start Date" should be earlier than the "End Date".</li>
+									</ul>
+								</section>
+							</div><!-- .fieldset-context -->
 
 							<div class="theFields"><!-- <div> is used only for styling hooks, where there are no semantics -->
 								<div class="formField">
@@ -244,9 +246,8 @@
 										/>
 									</div>
 								</div>
-							</div>
 
-							<div class="formField">
+								<div class="formField">
 									<div class="fieldWrapper">
 										<label for="fieldName4">Optional Email</label>
 
@@ -258,8 +259,8 @@
 										/>
 									</div>
 								</div>
-							</div>
-						</div>
+							</div><!-- .theFields -->
+						</div><!-- .fieldset -->
 					</fieldset>
 
 					<div class="form-actions">

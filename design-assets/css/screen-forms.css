@@ -66,7 +66,7 @@
 		display: none;
 	}
 
-	:where(.form-context, .field) {
+	:where(.form-context, .fieldset-context, .formField) {
 		& > * {
 			margin-top: var(--gap);
 		}
@@ -137,7 +137,9 @@
 	}
 
 	.formField {
-		margin-bottom: var(--gap);
+		& + .formField {
+			margin-block-start: var(--gap);
+		}
 
 		& label { /* split the status indicator away from the label */
 			display: flex; justify-content: space-between; align-items: baseline;
@@ -184,27 +186,6 @@
 				}
 			}
 		}
-
-		& .field-error-message {
-			padding: 0.25em 0.5em 0.5em;
-			border-radius: 0 0 var(--input-border-radius, 0.25rem) var(--input-border-radius, 0.25rem);
-			background-color: red; color: white;
-		}
-
-		& .form-instructions {
-			padding: 0.25em 0.5em 0.5em;
-			border-radius: 0 0 var(--input-border-radius, 0.25rem) var(--input-border-radius, 0.25rem);
-			background-color: var(--input-border-colour); color: white;
-			font-size: 0.875em;
-		}
-
-		&.hasError {
-			--input-border-colour: red;
-
-			& .form-instructions {
-				border-radius: 0; border-right-color: red; border-left-color: red;
-			}
-		}
 	}
 
 	.formActions {
@@ -243,6 +224,22 @@
 			& img {
 				width: 100%; display: flex;
 			}
+		}
+	}
+
+	main form {
+		container: form / inline-size;
+	}
+	@container form (min-width: 640px) {
+		.formField {
+			display: grid; grid-template-columns: 1fr 1fr; gap: var(--gap);
+
+			& > * {
+				margin-top: 0;
+			}
+		}
+		.fieldWrapper {
+			grid-column: 1 / 3;
 		}
 	}
 }
