@@ -1,4 +1,4 @@
-@layer reset, base, design, utilities;
+@layer reset, defaults, design, utilities;
 /*
 	# SCREEN-CORE.CSS
 
@@ -17,8 +17,8 @@
 		Reset:
 			Undo inconsistent default browsers styles, so there are no differences between them.
 
-		Base:
-			Base styles for "default" elements and "core level" markup. E.g., Fonts, Headings, how a <p> or <em> etc look by default, or how a basic form looks - without any component or page specific over-rides.
+		Defaults:
+			Styles for "default" elements and "core level" markup. E.g., Fonts, Headings, how a <p> or <em> etc look by default, or how a basic form looks - without any component or page specific over-rides.
 
 		Design:
 			The actual design of the site. How components look, how things are laid out, page specific styling, etc.
@@ -112,7 +112,7 @@
 		}
 }
 
-@layer base {
+@layer defaults {
 	/* # Font Imports */
 		/* .e.,g...
 

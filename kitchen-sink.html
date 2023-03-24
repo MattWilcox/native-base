@@ -59,15 +59,16 @@
 	</script>
 
 	<!-- Basic modern features -->
-	<meta name="theme-color"
-	      content="#ffffff"><!-- learn more: https://developer.mozilla.org/en-US/docs/Web/HTML/Element/meta/name/theme-color -->
-	<link rel="icon" href="/design-assets/images/favicon.svg"/><!-- SVG's can be made "darkmode" aware. See the linked example SVG. -->
+	<meta
+		name="theme-color"
+		content="#ffffff" /><!-- learn more: https://developer.mozilla.org/en-US/docs/Web/HTML/Element/meta/name/theme-color -->
+	<link rel="icon" href="/design-assets/images/favicon.svg" /><!-- SVG's can be made "darkmode" aware. See the linked example SVG. -->
 </head>
 <body>
 	<a href="#main" class="skiplink">Skip to main content</a><!-- A skiplink allows screen reader users to go straight to content, thus avoiding having to hear the header being read out. -->
 
 	<header>
-		<p class="uc_h1">Native Base</p><!-- Actual h1 elements should always be the title of the document, and only one per document. Here we use a Utility Class to give the _visual style_ of a h1, but the semantics of normal text. -->
+		<p class="uc_h1">Native Base</p><!-- Actual h1 elements should always be the title of the document, and there should be only one per document. Here we use a Utility Class to give the _visual style_ of a h1, but the semantics of normal text. -->
 
 		<nav
 			aria-label="Site Navigation"
@@ -89,6 +90,28 @@
 
 				One method to try and get the best of both worlds is to use JS so that the client's browser adds the `aria-current="page"` to the correct element, instead of the server needing to do this. It does mean that an accessibility enhancement becomes reliant on JS being enabled, but this is one of those choices that need to be considered per project.
 			-->
+
+			<search role="search" aria-label="Site wide"><!-- search is a new tag for 2023 https://html.spec.whatwg.org/multipage/grouping-content.html#the-search-element -->
+				<form action="/search-results">
+					<div class="htmlField"><!-- Why this markup? Read LINK -->
+						<div class="fieldWrapper">
+							<label for="searchTerm">
+								Search
+							</label>
+							<input
+								type="text"
+								id="searchTerm"
+								name="searchTerm"
+								placeholder="e.g., badminton"
+								required
+							/><!-- Why not type='search'? https://adrianroselli.com/2019/07/ignore-typesearch.html -->
+						</div>
+					</div>
+					<button type="submit" class="uc_button">
+						Go
+					</button>
+				</form>
+			</search>
 		</nav>
 	</header>
 
@@ -113,6 +136,27 @@
 					action=""
 					enctype="multipart/form-data"
 				>
+					<!-- It's not likely you'll want to have these "ui" messages on the form, the fieldset, and the field levels all at once, but depending on your situation any of them might be the right level to address those issues. I'd expect to decide on just one, most of the time. -->
+
+					<div class="form-context">
+						<section class="ui-instructions">
+							<h2>Form Instructions</h2>
+							<p>This is where instructions for filling out the form can be added. For example:</p>
+							<ul>
+								<li>Remember to gain the consent of a parent or guardian before completing this form.</li>
+							</ul>
+						</section>
+
+						<section class="ui-error-message">
+							<h2>Form Errors</h2>
+							<p>This is where errors with the form can be output.</p>
+							<p>For example, individual fieldsets may be valid, but the combination of values between fieldsets may not be considered valid:</p>
+							<ul>
+								<li>"Guardian Details > Address" should be the same as "Child Details > Address".</li>
+							</ul>
+						</section>
+					</div>
+
 					<fieldset>
 						<div class="fieldset">
 							<!--
@@ -122,26 +166,29 @@
 							-->
 							<legend>Fieldset Legend</legend>
 
-							<section class="fieldset-error-message">
-								<h2>Error</h2>
-								<p>This is where errors with the fieldgroup can be output:</p>
+							<section class="ui-instructions">
+								<h2>Fieldset Instructions</h2>
+								<p>This is where instructions for filling out the fieldset can be added. For example:</p>
 								<ul>
-									<li>This is an error</li>
-									<li>And so is this</li>
+									<li>When completing this field-group, remember the details should be for how old you will be when the event starts, and not how old you are today.</li>
 								</ul>
 							</section>
 
-							<section class="fieldset-instructions">
-								<h2>Instructions</h2>
-								<p>This is where instructions for filling out the form can be added.</p>
+							<section class="ui-error-message">
+								<h2>Fieldset Error</h2>
+								<p>This is where errors with the fieldset can be output.</p>
+								<p>For example, the individual fields may be valid, but the combination of values may not be considered valid:</p>
+								<ul>
+									<li>The "Start Date" should be earlier than the "End Date".</li>
+								</ul>
 							</section>
 
 							<div class="theFields"><!-- <div> is used only for styling hooks, where there are no semantics -->
-								<section class="field">
+								<section class="formField">
 									<div class="fieldWrapper">
 										<label for="fieldName">Field Label</label>
 
-										<select name="fieldName">
+										<select name="fieldName" required>
 											<optgroup label="group label">
 												<option value="1">First option</option>
 												<option value="2" selected>Second option</option>
@@ -155,18 +202,18 @@
 										</select>
 									</div>
 
-									<section class="field-error-message">
-										<h2>Error</h2>
-										<p>This is where errors with the fieldgroup can be output:</p>
+									<section class="ui-instructions">
+										<h2>Field Instructions</h2>
+										<p>This is where instructions specific to this field can be added.</p>
+									</section>
+
+									<section class="ui-error-message">
+										<h2>Field Error</h2>
+										<p>This is where errors with the field can be output:</p>
 										<ul>
 											<li>This is an error</li>
 											<li>And so is this</li>
 										</ul>
-									</section>
-
-									<section class="field-instructions">
-										<h2>Instructions</h2>
-										<p>This is where instructions for filling out the form can be added.</p>
 									</section>
 								</section>
 							</div>

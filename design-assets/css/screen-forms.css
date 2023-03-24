@@ -1,6 +1,7 @@
-@layer base {
+@layer defaults {
 	:root {
 		/* Form related */
+		--indent:                  var(--gap);
 		--input-padding:           0.5em;
 		--input-border-width:      2px;
 		--input-border-radius:     0.25em;
@@ -25,19 +26,13 @@
 	label {
 		display: block;
 	}
-	label > span {
+	[for] {
 		font-size: 0.875em; text-transform: uppercase;
-	}
-	label:not(.boolean) > span {
-		display: block; margin-bottom: 0.5em;
-	}
-	label.boolean where:(span, input) {
-		display: inline-block;
 	}
 
-	.legend {
-		display: block; margin-bottom: 1em;
-		font-size: 0.875em; text-transform: uppercase;
+	legend {
+		margin-inline-start: calc( 0px - var(--indent) );
+		text-transform: uppercase; letter-spacing: -0.025em; font-size: var(--font-size-heading-small);
 	}
 
 	input[type="text"],
@@ -71,64 +66,55 @@
 		display: none;
 	}
 
-	.fieldset {
-		& legend {
-			text-transform: uppercase; letter-spacing: 0.05em;
+	:where(.form-context, .field) {
+		& > * {
+			margin-top: var(--gap);
 		}
+	}
 
-		& fieldset > * + * {
+	:where(.ui-error-message, .ui-instructions) {
+		padding: 1rem 0.5rem 1em 3.5em; border-radius: 0.5rem 0.5rem; border: 0.15em solid red;
+		background-image:
+			url(/design-assets/images/exclamation-triangle.svg),
+			linear-gradient(to right, red 0 2.6em, white 2.6em 100% );
+		background-position:
+			0.65em 0.85em,
+			0 0;
+		background-size:
+			1.25em auto,
+			100% 100%;
+		background-repeat:
+			no-repeat,
+			no-repeat;
+
+		& * + * {
 			margin-block-start: 1rem;
 		}
+	}
+	:where(.ui-instructions) {
+		border-color: blue;
+		background-image:
+			url(/design-assets/images/information-circle.svg),
+			linear-gradient(to right, blue 0 2.6em, white 2.6em 100% );
+	}
 
-		&.required,
-		&:has(*[required]) {
-			legend {
+	.fieldset {
+		padding-inline-start: var(--indent);
+
+		&:has( *[required] ) {
+			& legend {
+				display: flex; justify-content: space-between; align-items: baseline;
+
 				&:after {
-					content: " *";
-					font-weight: bold; opacity: 0.5;
+					content: "contains required fields";
+					opacity: 0.5;
+					font-size: 1rem;
 				}
 			}
 		}
 
-		& [class^='field'] {
-			& > * + * {
-				margin-block-start: 1em;
-			}
-
-			& ul {
-				margin-inline-start: 1em;
-			}
-		}
-
-		& :where(.fieldset-error-message, .field-error-message) {
-			padding: 1rem 0.5rem 1em 3.5em; border-radius: 0.5rem 0.5rem; border: 0.15em solid red;
-			background-image:
-				url(/design-assets/images/exclamation-triangle.svg),
-				linear-gradient(to right, red 0 2.6em, white 2.6em 100% );
-			background-position:
-				0.65em 0.85em,
-				0 0;
-			background-size:
-				1.25em auto,
-				100% 100%;
-			background-repeat:
-				no-repeat,
-				no-repeat;
-		}
-		& :where(.fieldset-instructions, .field-instructions) {
-			padding: 1rem 0.5rem 1em 3.5em; border-radius: 0.5rem 0.5rem; border: 0.15em solid blue;
-			background-image:
-				url(/design-assets/images/information-circle.svg),
-				linear-gradient(to right, blue 0 2.6em, white 2.6em 100% );
-			background-position:
-				0.65em 0.85em,
-				0 0;
-			background-size:
-				1.25em auto,
-				100% 100%;
-			background-repeat:
-				no-repeat,
-				no-repeat;
+		& .fieldWrapper > * + * {
+			margin-block-start: 0.5rem;
 		}
 
 		& > * {
@@ -150,16 +136,17 @@
 		}
 	}
 
-	div.formField,
-	div.htmlField {
+	.formField {
 		margin-bottom: var(--gap);
 
-		&.required,
-		&:has(*[required]) {
-			& label > span {
+		&:has( *[required] ) {
+			& label {
+				display: flex; justify-content: space-between; align-items: baseline;
+
 				&:after {
-					content: " *";
-					font-weight: bold; opacity: 0.5;
+					content: "required";
+					opacity: 0.5;
+					font-size: 1rem;
 				}
 			}
 		}
