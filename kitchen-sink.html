@@ -184,7 +184,7 @@
 							</section>
 
 							<div class="theFields"><!-- <div> is used only for styling hooks, where there are no semantics -->
-								<section class="formField">
+								<div class="formField">
 									<div class="fieldWrapper">
 										<label for="fieldName">Field Label</label>
 
@@ -215,7 +215,49 @@
 											<li>And so is this</li>
 										</ul>
 									</section>
-								</section>
+								</div>
+
+								<div class="formField">
+									<div class="fieldWrapper">
+										<label for="fieldName2">Any Text</label>
+
+										<input
+											type="text"
+											name="fieldName2"
+											id="fieldName2"
+											placeholder="e.g., Bob"
+											required
+										/>
+									</div>
+								</div>
+
+								<div class="formField">
+									<div class="fieldWrapper">
+										<label for="fieldName3">Compulsory Email</label>
+
+										<input
+											type="email"
+											name="fieldName3"
+											id="fieldName3"
+											placeholder="e.g., Bob"
+											required
+										/>
+									</div>
+								</div>
+							</div>
+
+							<div class="formField">
+									<div class="fieldWrapper">
+										<label for="fieldName4">Optional Email</label>
+
+										<input
+											type="email"
+											name="fieldName4"
+											id="fieldName4"
+											placeholder="e.g., Bob"
+										/>
+									</div>
+								</div>
 							</div>
 						</div>
 					</fieldset>

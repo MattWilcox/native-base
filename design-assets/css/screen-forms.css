@@ -139,14 +139,37 @@
 	.formField {
 		margin-bottom: var(--gap);
 
-		&:has( *[required] ) {
-			& label {
-				display: flex; justify-content: space-between; align-items: baseline;
+		& label { /* split the status indicator away from the label */
+			display: flex; justify-content: space-between; align-items: baseline;
 
+			&:after {
+				content: "";
+				font-size: 1rem;
+			}
+		}
+
+		/* Dynamic indicators for required / valid states */
+		&:has( *:not(:placeholder-shown):invalid ) {
+			& label {
+				&:after {
+					content: "invalid";
+					color: hsl( var(--ui-red) ); font-weight: bold;
+				}
+			}
+		}
+
+		&:has( *[required]:invalid ) { /* A required input that's invalid */
+			& label {
 				&:after {
 					content: "required";
-					opacity: 0.5;
-					font-size: 1rem;
+				}
+			}
+		}
+
+		&:has( *:not(:placeholder-shown)[required]:invalid ) { /* A required input, placeholder not shown, but invalid */
+			& label {
+				&:after {
+					content: "invalid";
 				}
 			}
 		}
