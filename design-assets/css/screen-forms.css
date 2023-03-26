@@ -87,7 +87,7 @@
 			no-repeat,
 			no-repeat;
 
-		& * + * {
+		& > * + * {
 			margin-block-start: 1rem;
 		}
 	}
@@ -117,7 +117,7 @@
 			margin-block-start: 0.5rem;
 		}
 
-		& > * {
+		& > * + * {
 			margin-top: var(--gap);
 		}
 
@@ -231,7 +231,8 @@
 		container: form / inline-size;
 	}
 	@container form (min-width: 640px) {
-		.formField {
+		:is(.form-context, .fieldset-context, .formField):has(> *:nth-child(2)) {
+			/* if any of those elements has two child elements, split them in a grid of two */
 			display: grid; grid-template-columns: 1fr 1fr; gap: var(--gap);
 
 			& > * {
