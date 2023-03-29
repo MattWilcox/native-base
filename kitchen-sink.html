@@ -190,7 +190,18 @@
 									<div class="fieldWrapper">
 										<label for="fieldName">Field Label</label>
 
-										<select name="fieldName" required>
+										<select
+											name="fieldName"
+											aria-details="field-instructions field-errors"
+											required><!--
+												https://benmyers.dev/blog/aria-labels-and-descriptions/
+												and
+												https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Annotations
+
+												aria-description = single text string on the element itself
+												aria-describedby = single sentence simple description provided by another element
+												aria-details     = more complex information with multiple elements
+											-->
 											<optgroup label="group label">
 												<option value="1">First option</option>
 												<option value="2" selected>Second option</option>
@@ -204,12 +215,12 @@
 										</select>
 									</div>
 
-									<section class="ui-instructions">
+									<section class="ui-instructions" id="field-instructions">
 										<h2>Field Instructions</h2>
 										<p>This is where instructions specific to this field can be added.</p>
 									</section>
 
-									<section class="ui-error-message">
+									<section class="ui-error-message" id="field-errors">
 										<h2>Field Error</h2>
 										<p>This is where errors with the field can be output:</p>
 										<ul>
