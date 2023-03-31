@@ -136,6 +136,10 @@
 		}
 	}
 
+	fieldset + fieldset {
+		margin-block-start: var(--gap);
+	}
+
 	.formField {
 		& + .formField {
 			margin-block-start: var(--gap);
