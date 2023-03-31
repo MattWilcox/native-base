@@ -98,6 +98,10 @@
 			linear-gradient(to right, blue 0 2.6em, white 2.6em 100% );
 	}
 
+	form > * + * {
+		margin-top: calc( var(--gap) * 2 );
+	}
+
 	.fieldset {
 		padding-inline-start: var(--indent);
 
@@ -111,10 +115,6 @@
 					font-size: 1rem;
 				}
 			}
-		}
-
-		& .fieldWrapper > * + * {
-			margin-block-start: 0.5rem;
 		}
 
 		& > * + * {
@@ -188,6 +188,13 @@
 		}
 	}
 
+	.fieldWrapper:has( input[type="radio"], input[type="checkbox"] ) {
+		display: flex; gap: calc( 0.5 * var(--gap) );
+
+		& label { order: 2; }
+		& input { order: 1; }
+	}
+
 	.formActions {
 		display: flex; align-items: center; justify-content: space-between;
 		margin-top: var(--gap);
@@ -231,7 +238,11 @@
 		container: form / inline-size;
 	}
 	@container form (min-width: 640px) {
-		:is(.form-context, .fieldset-context, .formField):has(> *:nth-child(2)) {
+		.fieldset {
+			--indent: calc( var(--gap) * 2 );
+		}
+
+		:is(.context):has(> *:nth-child(2)) {
 			/* if any of those elements has two child elements, split them in a grid of two */
 			display: grid; grid-template-columns: 1fr 1fr; gap: var(--gap);
 
@@ -239,6 +250,7 @@
 				margin-top: 0;
 			}
 		}
+
 		.fieldWrapper {
 			grid-column: 1 / 3;
 		}

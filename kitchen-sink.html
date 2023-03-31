@@ -138,7 +138,8 @@
 				>
 					<!-- It's not likely you'll want to have these "ui" messages on the form, the fieldset, and the field levels all at once, but depending on your situation any of them might be the right level to address those issues. I'd expect to decide on just one, most of the time. -->
 
-					<div class="form-context">
+					<div class="context">
+						<!-- form > .context is where information related specifically to the form itself should go - as opposed to content addressing the wider context, or specific to fields and fieldsets -->
 						<section class="ui-instructions">
 							<h2>Form Instructions</h2>
 							<p>This is where instructions for filling out the form can be added. For example:</p>
@@ -166,7 +167,8 @@
 							-->
 							<legend>Fieldset Legend</legend>
 
-							<div class="fieldset-context">
+							<div class="context">
+								<!-- .fieldset > .context is where information related specifically to this specific fieldset should go - as opposed to content addressing the wider context, or specific to fields -->
 								<section class="ui-instructions">
 									<h2>Fieldset Instructions</h2>
 									<p>This is where instructions for filling out the fieldset can be added. For example:</p>
@@ -215,19 +217,22 @@
 										</select>
 									</div>
 
-									<section class="ui-instructions" id="field-instructions">
-										<h2>Field Instructions</h2>
-										<p>This is where instructions specific to this field can be added.</p>
-									</section>
+									<div class="context">
+										<!-- .formField > .context is where information related specifically to this specific fieldset should go - as opposed to content addressing the wider context, or specific to fields -->
+										<section class="ui-instructions" id="field-instructions">
+											<h2>Field Instructions</h2>
+											<p>This is where instructions specific to this field can be added.</p>
+										</section>
 
-									<section class="ui-error-message" id="field-errors">
-										<h2>Field Error</h2>
-										<p>This is where errors with the field can be output:</p>
-										<ul>
-											<li>This is an error</li>
-											<li>And so is this</li>
-										</ul>
-									</section>
+										<section class="ui-error-message" id="field-errors">
+											<h2>Field Error</h2>
+											<p>This is where errors with the field can be output:</p>
+											<ul>
+												<li>This is an error</li>
+												<li>And so is this</li>
+											</ul>
+										</section>
+									</div>
 								</div>
 
 								<div class="formField">
@@ -272,6 +277,41 @@
 								</div>
 							</div><!-- .theFields -->
 						</div><!-- .fieldset -->
+					</fieldset>
+
+					<fieldset>
+						<div class="fieldset">
+							<legend>Another Fieldset</legend>
+						</div>
+
+						<div class="theFields">
+							<fieldset>
+								<div class="fieldset">
+									<legend>Radioset One</legend>
+
+									<div class="formField">
+										<div class="fieldWrapper">
+											<label for="radioSet1Option1">Radio Value One</label>
+											<input type="radio" name="radioSet1" id="radioSet1Option1" value="one" />
+										</div>
+									</div>
+
+									<div class="formField">
+										<div class="fieldWrapper">
+											<label for="radioSet1Option2">Radio Value Two</label>
+											<input type="radio" name="radioSet1" id="radioSet1Option2" value="one" />
+										</div>
+									</div>
+
+									<div class="formField">
+										<div class="fieldWrapper">
+											<label for="radioSet1Option3">Radio Value Three</label>
+											<input type="radio" name="radioSet1" id="radioSet1Option3" value="one" />
+										</div>
+									</div>
+								</div>
+							</fieldset>
+						</div>
 					</fieldset>
 
 					<div class="form-actions">
