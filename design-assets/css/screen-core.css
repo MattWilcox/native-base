@@ -360,7 +360,7 @@
 	:where(.uc_button) {
 		display: inline-flex; align-items: center; gap: calc( var(--gap) / 2 );
 		padding: calc( var(--gap) / 2 ); border-radius: 0.5em;
-		background-color: hsl( var(--brand-colour) / 0.25 );
+		background-color: hsl( var(--brand-colour) / 0.75 );
 		font-size: 0.875em; text-transform: uppercase; letter-spacing: calc( (var(--ps-letter-spacing, 40) / 1000) * 1em );
 		color: hsl( var(--white) ) !important;
 		transition: background-color, var(--fast);

@@ -195,6 +195,7 @@
 	.fieldWrapper:has( input[type="radio"], input[type="checkbox"] ) {
 		display: flex; gap: calc( 0.5 * var(--gap) );
 
+		/* ensure the input appears before the label regardless of source order */
 		& label { order: 2; }
 		& input { order: 1; }
 	}
