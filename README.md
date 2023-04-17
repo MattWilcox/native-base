@@ -1,12 +1,14 @@
 # Native Base
 
-How would I build a website if I could rely on web-native 2023 technology features?
+How would I build a website if I could rely on 2023's web-native technology features?
 
-Like this. An opinionated model of HTML, CSS, and Javascript implementations for the front-end of web projects in 2023.
+Like this. Native Base is opinionated model of HTML, CSS, and Javascript patterns for the front-end of web projects if you care only about 2023's "evergreen" browsers.
 
 - No frameworks.
 - No build tooling.
 - Progressive Enhancement.
+
+It's _example code_ with heavy comments. It's not strictly something you'd use to build a site - it's reference material.
 
 It uses only core native technologies of the web, with no higher level abstractions. No React, no Sass, no Tailwind, no npm, no Vite, no build-steps. Feel free to add those if you find this base otherwise to your liking. This is more for myself than anything, but you're welcome to do whatever.
 
@@ -29,13 +31,13 @@ It's a base starter and reference for myself. But why is it _this_?
 
 I care a great deal about the end user. The end user might be someone like me, or nothing like me. They may be using a 27" high DPI display, or on a tiny phone with big visible pixels. Maybe they're using a game console and old TV, or maybe they're using a high-end VR headset. They might be on hard-wired gigabit networks, or on patchy mobile networks with intermittent connectivity. They may have 20:20 vision or be completely blind. Perhaps they are dyslexic, or incapable of fine motor movement. They may love animations, or they may become physically uncomfortable in reaction to motion. They may be a he, or a she, or a something else. They may be any combination of any of those, and an unknowable array more. Perhaps the site is being translated into another language I don't speak via a localised URL, and it flows right to left. Or top to bottom. The person consuming content may not be human at all - they may be a search engine or scraper service visiting the site.
 
-The technologies of the web, by careful design, enable a single web page to cater for _all of those end users_ at once. If you code your HTML and CSS properly. If you treat JavaScript as an enhancement, and not a core requirement.
+The technologies of the web, by their careful design, enable a single web page to cater for _all of those end users_ at once. If you code your HTML and CSS properly. If you treat JavaScript as an enhancement, and not a core requirement.
 
-HTML is not merely wrapper code required to let you style things. CSS is not merely a strange language used to make that content pretty. They are technologies to describe content, enable its broad consumption and understanding, and _also_ to make it pretty.
+HTML is not merely wrapper code required to let you style things. CSS is not merely a language used to make that content pretty. They are technologies to describe content, enable its broad consumption and understanding, and _also_ to make it pretty.
 
 Most of the web consists of static pages; text, some pictures, and maybe a video. Most of the web's content is not app-like, by which I mean something that requires real-time interaction and dynamically updating regions. Yet frameworks designed for the creation of app-like experiences are all too often used to instead output "apps" that are little more than a way to display regular static text and image content - but fashionably foregoing a full page refresh.
 
-Understand that those frameworks are specialist tooling - effectively "custom browser engines" operating inside an _actual browser engine_ - and by necessity of that fact they are more narrowly considered and unavoidably less efficient. If you are using them only to deliver pages of text, some images, and a bit of video - you have used the wrong tool. It will cut off or inconvenience some of the people that might otherwise have been able to consume that content.
+Understand that those frameworks are specialist tooling - effectively their own "custom browser engines" operating inside an _actual browser engine_ - and by necessity of that fact they are more narrowly considered and unavoidably less efficient. If you are using them only to deliver pages of text, some images, and a bit of video - it's extremely likely you have used the wrong tool. It will cut off or inconvenience some of the people that might otherwise have been able to consume that content.
 
 I want to make it clear: the vast majority of the web's content is suitable and appropriate to be implemented using only the core technologies of the web. Technologies which are designed, built, tested, and iterated over _decades_ specifically for the task of handling text, pictures, and some multi-media - for all types of consumer and context - with all manner of considerations and accommodations already thought through, of which the casual developer may not be aware, and for which those fashionable frameworks may have no accommodations.
 
@@ -49,13 +51,13 @@ Un-considered use of frameworks and build tooling is an irresponsible default ch
 
 ## A note on the strategy used to implement design
 
-There are minimal use of "utility" classes to control design. It's my opinion that the vast majority of "design code" belongs in CSS files, and not as classes impersonating style-attributes (`colour1,font-large`), or class attributes stuffed with more hooks than a fishermans tackle box (`sm:weight-400 md:weight-300 lg:weight-100 promo promo__type1 promo__type1-alt`).
+Here there are minimal uses of "utility" classes to control design. It's my opinion that the vast majority of "design code" belongs in CSS files, and not as classes impersonating style-attributes (`colour1,font-large`), or class attributes stuffed with more hooks than a fishermans tackle box (`sm:weight-400 md:weight-300 lg:weight-100 promo promo__type1 promo__type1-alt`).
 
 The more you are required to adjust HTML or add to classes in order to implement a design, the more of a pain-in-the-arse you are creating for your future self or anyone else that has to work on things that touch the HTML.
 
 HTML is for annotating the content of a webpage to explicitly describe its structure and meaning. HTML is not intended to be used to embed style. Avoiding the close coupling of style with content is _precisely_ why CSS was created in the first place.
 
-Classes should be used meagerly, and in a manner to _label a design context_ which is then styled by matching CSS rules in a CSS file.
+My ethos is that classes should be used meagerly, and in a manner to _label a design context_ which is then styled by matching CSS rules in a CSS file.
 
 Roles for HTML:
 
@@ -69,13 +71,13 @@ Roles for classes:
 - This is a banner
 - This is a gallery of thumbnails
 
-Some grudging accommodation is made for often-repeated styling that is reasonably atomic, in leu of any ability (yet) for CSS to re-use chunks via reference (i.e., a native form of basic SCSS mixin).
+Some grudging accommodation is made for often-repeated styling that is reasonably atomic, in leu of any ability (yet) for CSS to re-use declarations via reference (i.e., a native form of basic SCSS mixin).
 
 Regarding Tailwind...
 
 > Tailwind and it's ilk are tools for large groups to wrangle large projects; but as a price they inflict their abstractions as markup litter, and create a requirement for build-tooling that has its own dependencies. This works against the grain of the core web technologies and introduces fragility. I would strongly urge you to avoid such tools until they are _needed to solve a real problem you have_.
 
-I will be happy when Tailwind and React are once again no longer an assumed given when people talk about web projects. They are the last decade's "Macromedia Flash".
+I will be happy when Tailwind and React are once again no longer an assumed given when people talk about web projects. They are the last decade's "Macromedia Flash" and I await their demise with surety.
 
 ## The project components
 
