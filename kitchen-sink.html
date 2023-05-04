@@ -36,7 +36,7 @@
 		rel="stylesheet"
 		media="screen"
 		href="/design-assets/css/screen-core.css"
-	/>
+	/><!-- Read the screen-core.css file itself to understand more about how I use CSS -->
 	<link
 		rel="stylesheet"
 		media="screen"
@@ -118,8 +118,96 @@
 	<main id="main">
 		<hgroup><!-- Used to group a heading with any secondary content, such as subheadings / taglines / timestamps -->
 			<h1 class="uc_h1">Kitchen Sink</h1>
-			<p>Examples of all of the mark-up patterns. Tons of in-line comments. View the source.</p>
+			<p>This page in its entirety is a way to have examples of many of the main mark-up and styling patterns I use, it's not in itself meant to make sense or be "real content". There are tons of in-line comments. View the source.</p>
 		</hgroup>
+
+		<article><!-- articles are discrete "islands" of content that make sense out of context. -->
+			<section><!-- <section> is used for generic blocks of content that have a heading. -->
+				<h2 class="uc_h2">Generic text elements</h2>
+				<p>There should be one and only one <code>h1</code> per page.</p>
+
+			</section>
+		</article>
+
+		<article><!-- articles are discrete "islands" of content that make sense out of context. -->
+			<section><!-- <section> is used for generic blocks of content that have a heading. -->
+				<h2 class="uc_h2">Tables</h2>
+
+				<p>Tables are a tricky from a practical perspective as they don't work well in confined spaces. Tables by definition use two dimensionality as a tool of semantics and presentation. So they are terrible when the screen they are being shown on is too small to fit the table into - one of your dimensions ends up too small to fit in the data.</p>
+
+				<p>Tables tend to work well only on larger screens, and so you should make sure you have a good reason for displaying tabular data, and prefer other solutions if practical.</p>
+
+				<p>There are methods for adapting tabular data for display on smaller screens, but be aware none are without compromise:</p>
+
+				<ul>
+					<li>If you set <code>display: block;</code> on any table element, you will strip it of the native accessibility enhancements it has, leading to a loss of affordances for people using assistive devices.</li>
+					<li>If you rely on over-scroll, it becomes hard to have an overview of the table at a glance, and less clear.</li>
+				</ul>
+
+				<p>There is no "right choice".</p>
+
+				<table>
+					<caption>The title of the table</caption>
+
+					<thead>
+						<tr>
+							<td></td>
+							<th>Column One</th>
+							<th>Column Two</th>
+							<th>Column Three</th>
+						</tr>
+					</thead>
+
+					<tbody>
+						<tr>
+							<th>Row Title</th>
+							<td>1</td>
+							<td>2</td>
+							<td>3</td>
+						</tr>
+						<tr>
+							<th>Row Title 2</th>
+							<td>1</td>
+							<td>2</td>
+							<td>3</td>
+						</tr>
+						<tr>
+							<th>Row Title 3</th>
+							<td>1</td>
+							<td>2</td>
+							<td>3</td>
+						</tr>
+						<tr>
+							<th>Row Title 4</th>
+							<td>1</td>
+							<td>2</td>
+							<td>3</td>
+						</tr>
+						<tr>
+							<th>Row Title 5</th>
+							<td>1</td>
+							<td>2</td>
+							<td>3</td>
+						</tr>
+						<tr>
+							<th>Row Title 6</th>
+							<td>1</td>
+							<td>2</td>
+							<td>3</td>
+						</tr>
+					</tbody>
+
+					<tfoot>
+						<tr>
+							<th>Totals</th>
+							<td>6</td>
+							<td>12</td>
+							<td>18</td>
+						</tr>
+					</tfoot>
+				</table>
+			</section>
+		</article>
 
 		<article><!-- articles are discrete "islands" of content that make sense out of context. -->
 			<section><!-- <section> is used for generic blocks of content that have a heading. -->
@@ -275,6 +363,44 @@
 										/>
 									</div>
 								</div>
+
+								<div class="formField">
+									<div class="fieldWrapper">
+										<label for="fieldName5">Disabled Input</label>
+
+										<input
+											type="email"
+											name="fieldName5"
+											id="fieldName5"
+											placeholder="e.g., Bob"
+											disabled
+										/>
+									</div>
+								</div>
+
+								<div class="formField">
+									<div class="fieldWrapper">
+										<label for="fieldName6">Autofill Example (name)</label>
+										<!--
+											REFERENCE: https://developer.mozilla.org/en-US/docs/Web/HTML/Attributes/autocomplete
+											Autocomplete attribute values are listed in the above link.
+
+											NOTE: Chrome does not accept `autocomplete="off"` as a value.
+											https://bugs.chromium.org/p/chromium/issues/detail?id=587466
+										-->
+
+										<input
+											type="text"
+											name="fieldName6"
+											id="fieldName6"
+											placeholder="e.g., Bob"
+											autocomplete="name"
+											autocapitalize="off"
+											autocorrect="off"
+											spellcheck="false"
+										/>
+									</div>
+								</div>
 							</div><!-- .theFields -->
 						</div><!-- .fieldset -->
 					</fieldset>
@@ -353,10 +479,10 @@
 			</section>
 
 			<aside aria-label="More about forms"><!-- aside represents content indirectly related to the main block -->
-				<h3 class="uc_h3">More about forms</h3>
+				<h3 class="uc_h3">External resources</h3>
 				<ul role="list">
 					<li>
-						<a href="/forms">Forms</a>
+						<a href="https://www.w3.org/WAI/tutorials/forms">Web Accessibillity Initiative; Forms tutorial</a>
 					</li>
 				</ul>
 			</aside>
