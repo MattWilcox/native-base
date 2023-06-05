@@ -1,8 +1,10 @@
 # Native Base
 
+> NOTE: This whole repo is a work in progress, as and when I find the time.
+
 How would I build a website if I could rely on 2023's web-native technology features?
 
-Like this. Native Base is opinionated model of HTML, CSS, and Javascript patterns for the front-end of web projects if you care only about 2023's "evergreen" browsers.
+Like this. Native Base is opinionated model of HTML, CSS, and Javascript patterns for the front-end of web projects if you care only about 2023's "evergreen" browsers. It is not "a design" or a "design system".
 
 - No frameworks.
 - No build tooling.
@@ -20,7 +22,7 @@ The aim is to provide a code reference showing how to create accessible, flexibl
 
 This project is just HTML, CSS, and the barest touch of plain Javascript. It uses some modern features recently established in those core technologies, such as;
 
-- Modern CSS selectors, properties, and patterns - such as Cascade Layers, Nesting, Logical Properties, and more.
+- Modern CSS features, properties, and patterns - such as Cascade Layers, Nesting, Logical Properties, and more.
 - Modern Javascript for experience enhancements.
 
 Examples are shown of basic but robust markup patterns with a focus on semantics and accessibility. It contains scaffolding to assist in implementing designs, and has some basic minimally designed elements where appropriate. For example, forms have an established mark-up pattern and associated visual presentation of their elements and states which align with good design practice; but they are expected to be adjusted to suit, and this project has no actual design per-se.
@@ -31,11 +33,11 @@ It's a base starter and reference for myself. But why is it _this_?
 
 I care a great deal about the end user. The end user might be someone like me, or nothing like me. They may be using a 27" high DPI display, or on a tiny phone with big visible pixels. Maybe they're using a game console and old TV, or maybe they're using a high-end VR headset. They might be on hard-wired gigabit networks, or on patchy mobile networks with intermittent connectivity. They may have 20:20 vision or be completely blind. Perhaps they are dyslexic, or incapable of fine motor movement. They may love animations, or they may become physically uncomfortable in reaction to motion. They may be a he, or a she, or a something else. They may be any combination of any of those, and an unknowable array more. Perhaps the site is being translated into another language I don't speak via a localised URL, and it flows right to left. Or top to bottom. The person consuming content may not be human at all - they may be a search engine or scraper service visiting the site.
 
-The technologies of the web, by their careful design, enable a single web page to cater for _all of those end users_ at once. If you code your HTML and CSS properly. If you treat JavaScript as an enhancement, and not a core requirement.
+The technologies of the web, by their careful design, enable a single web page to cater for _all of those end users_ at once. If you code your HTML and CSS properly. If you treat JavaScript as an enhancement, and not a core requirement. If you remember that the web starts as just text content and _everything you do to it after that_ can close a door for someone somewhere if you aren't thinking about it.
 
 HTML is not merely wrapper code required to let you style things. CSS is not merely a language used to make that content pretty. They are technologies to describe content, enable its broad consumption and understanding, and _also_ to make it pretty.
 
-Most of the web consists of static pages; text, some pictures, and maybe a video. Most of the web's content is not app-like, by which I mean something that requires real-time interaction and dynamically updating regions. Yet frameworks designed for the creation of app-like experiences are all too often used to instead output "apps" that are little more than a way to display regular static text and image content - but fashionably foregoing a full page refresh.
+Most of the web consists of static pages; text, some pictures, and maybe a video. Most of the web's content is not app-like, by which I mean something that requires real-time interaction and dynamically updating regions. Yet frameworks designed for the creation of app-like experiences are all too often used to instead output "apps" that are little more than a way to display regular static text and image content - but fashionably foregoing a full page refresh, or having some shiny spinny animations.
 
 Understand that those frameworks are specialist tooling - effectively their own "custom browser engines" operating inside an _actual browser engine_ - and by necessity of that fact they are more narrowly considered and unavoidably less efficient. If you are using them only to deliver pages of text, some images, and a bit of video - it's extremely likely you have used the wrong tool. It will cut off or inconvenience some of the people that might otherwise have been able to consume that content.
 
@@ -85,7 +87,11 @@ All of them are annotated with comments internally, in an attempt to explain any
 
 ### index.html
 
-How all HTML pages should begin. Features that are optional are marked as such with comments.
+A minimal example scaffolding of a "blank page". Features that are optional are marked as such with comments.
+
+### kitchen-sink.html
+
+Every bit of "core markup" I can think of all in one place. Headings, basic navigation, simlpe forms, etc.
 
 ### screen-core.css
 
