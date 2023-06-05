@@ -41,7 +41,7 @@
 		rel="stylesheet"
 		media="screen"
 		href="/design-assets/css/screen-demo.css"
-	/><!-- this is a separate stylesheet purely for organisation; in real projects the content of this file should likely go in the screen-core.css file -->
+	/><!-- this is a separate stylesheet purely for organisation of this demo project; in real projects the content of this file should likely go in the screen-core.css file -->
 
 	<!-- OPTIONAL: environmental state indicators.
 	     Add environmental state indicators to the HTML element as soon as possible.
@@ -62,7 +62,7 @@
 	<meta
 		name="theme-color"
 		content="#ffffff" /><!-- learn more: https://developer.mozilla.org/en-US/docs/Web/HTML/Element/meta/name/theme-color -->
-	<link rel="icon" href="/design-assets/images/favicon.svg" /><!-- SVG's can be made "darkmode" aware. See the linked example SVG. -->
+	<link rel="icon" href="/design-assets/images/favicon.svg" /><!-- SVG's can be made "dark-mode" aware. See the linked example SVG. -->
 </head>
 <body>
 	<a href="#main" class="skiplink">Skip to main content</a><!-- A skiplink allows screen reader users to go straight to content, thus avoiding having to hear the header being read out. -->
@@ -73,7 +73,7 @@
 		<nav
 			aria-label="Site Navigation"
 			class="navSite"
-		><!-- aria-label is used to explicitly describe what navigation this is, for screen readers. -->
+		><!-- aria-label is used to explicitly describe which navigation this is, for screen readers. -->
 			<ul role="list"><!-- Lists that use CSS to remove bullets MUST have role="list" to retain their meaning in screen readers. -->
 				<li>
 					<a href="/">Home</a>
@@ -93,7 +93,7 @@
 
 			<search role="search" aria-label="Site wide"><!-- search is a new tag for 2023 https://html.spec.whatwg.org/multipage/grouping-content.html#the-search-element -->
 				<form action="/search-results">
-					<div class="formField"><!-- Why this markup? Read LINK -->
+					<div class="formField"><!-- Why this markup? Read TODO:LINK -->
 						<div class="fieldWrapper">
 							<label for="searchTerm">
 								Search
@@ -125,7 +125,6 @@
 			<section><!-- <section> is used for generic blocks of content that have a heading. -->
 				<h2 class="uc_h2">Generic text elements</h2>
 				<p>There should be one and only one <code>h1</code> per page.</p>
-
 			</section>
 		</article>
 
@@ -219,7 +218,7 @@
 					rel="stylesheet"
 					media="screen"
 					href="/design-assets/css/screen-forms.css"
-				/><!-- For more info on why this is here, read the article /css-loading-strategy -->
+				/><!-- For more info on why this is here, read the article TODO:/css-loading-strategy -->
 				<form
 					action=""
 					enctype="multipart/form-data"
@@ -487,6 +486,8 @@
 				</ul>
 			</aside>
 		</article>
+
+		<p>NOTE: Plenty more stuff still to be added here.</p>
 	</main>
 
 	<footer>
