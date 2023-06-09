@@ -6,6 +6,8 @@
 	      content="width=device-width,initial-scale=1" />
 	<meta name="description"
 	      content="Accessible Markup Patterns" />
+	<meta name="view-transition"
+	      content="same-origin" /><!-- Opt into page transition animations. By default, they cross-fade. See https://smashing-transitions.netlify.app/basics-compared-same-page-next/ -->
 	<!-- LEARN MORE:
 	     What can go in the head, and why MUST meta and viewport go first, and what do they do?
 	     https://github.com/joshbuchea/HEAD#recommended-minimum
@@ -479,7 +481,10 @@
 
 			<aside aria-label="More about forms"><!-- aside represents content indirectly related to the main block -->
 				<h3 class="uc_h3">External resources</h3>
-				<ul role="list">
+				<ul>
+					<li>
+						<a href="https://html.spec.whatwg.org/multipage/forms.html#forms">HTML spec for Forms</a>
+					</li>
 					<li>
 						<a href="https://www.w3.org/WAI/tutorials/forms">Web Accessibillity Initiative; Forms tutorial</a>
 					</li>
