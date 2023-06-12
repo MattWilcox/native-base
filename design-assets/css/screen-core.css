@@ -357,10 +357,10 @@
 		.uc_h2,
 		.uc_h3
 	 ) {
-		font-family:    var(--font-family-headings);
-		font-weight:    bold;
+		font-family   : var(--font-family-headings);
+		font-weight   : bold;
 		letter-spacing: var(--letter-spacing);
-		text-wrap: balance;
+		text-wrap     : balance;
 	}
 
 	:where(.uc_h1) { font-size: var(--font-size-heading-large) }
@@ -402,14 +402,53 @@
 		background-color: hsl( var(--brand-colour) / 1 );
 	}
 
-	/* Styling "chunks" of text that contain multiple types of mark-up, such as paragraphs, ul, li, etc */
+	/* Styling "blocks" of text such as from a Rich Text Editor, that contains multiple types of mostly text mark-up, such as paragraphs, ul, li, etc */
 	:where(.uc_rich-text) {
 		& > * + * {
 			margin-block-start: var(--gap);
 		}
 
-		& li + li {
-			margin-block-start: calc( var(--gap) * 0.5 );
+		&:not([data-allow-long-lines]) > * {
+			max-inline-size: 72ch; /* Don't allow hard to read line-lengths unless there's a data attribute to say to */
+		}
+
+		& h2:not([class*="uc_h"]) { /* A h2 that doesn't have any heading related utility class on it */
+			font-size: var(--font-size-heading);
+		}
+		& h3:not([class*="uc_h"]) { /* A h3 that doesn't have any heading related utility class on it */
+			font-size: var(--font-size-heading-small);
+		}
+		& h4:not([class*="uc_h"]) { /* A h4 that doesn't have any heading related utility class on it */
+			font-size: var(--font-size-promoted);
+		}
+
+		& a:not([class]) { /* Anchors that have a class likely have some unique styling */
+			text-decoration: underline;
+			text-underline-offset: 0.15em;
+		}
+
+		& ol {
+			margin-left: 1.7em;
+
+			& li::marker {
+				font-family: monospace; font-size: 0.875em;
+			}
+		}
+
+		& ul {
+			margin-left: 1.2em;
+		}
+
+		& blockquote {
+			padding: 1em; margin-bottom: 1em;
+
+			& p:last-child {
+				margin-bottom: 0;
+			}
+		}
+
+		& iframe {
+			display: block;
 		}
 	}
 }
