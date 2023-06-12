@@ -114,13 +114,13 @@
 			max-inline-size: 72ch; /* Don't allow hard to read line-lengths */
 		}
 
-		& h2 {
+		& h2:not([class*="uc_h"]) { /* A h2 that doesn't have any heading related utility class on it */
 			font-size: var(--font-size-heading);
 		}
-		& h3 {
+		& h3:not([class*="uc_h"]) { /* A h3 that doesn't have any heading related utility class on it */
 			font-size: var(--font-size-heading-small);
 		}
-		& h4 {
+		& h4:not([class*="uc_h"]) { /* A h4 that doesn't have any heading related utility class on it */
 			font-size: var(--font-size-promoted);
 		}
 
@@ -150,7 +150,7 @@
 		}
 
 		& iframe {
-			display: block; margin-bottom: 2em;
+			display: block;
 		}
 	}
 
