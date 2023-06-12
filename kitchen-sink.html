@@ -5,9 +5,9 @@
 	<meta name="viewport"
 	      content="width=device-width,initial-scale=1" />
 	<meta name="description"
-	      content="Accessible Markup Patterns" />
+	      content="A collection of Accessible Markup Patterns" />
 	<meta name="view-transition"
-	      content="same-origin" /><!-- Opt into page transition animations. By default, they cross-fade. See https://smashing-transitions.netlify.app/basics-compared-same-page-next/ -->
+	      content="same-origin" /><!-- Opt into page transition animations. By default, they cross-fade. See https://smashing-transitions.netlify.app/page-transition-flag/ -->
 	<!-- LEARN MORE:
 	     What can go in the head, and why MUST meta and viewport go first, and what do they do?
 	     https://github.com/joshbuchea/HEAD#recommended-minimum
@@ -118,20 +118,21 @@
 	</header>
 
 	<main id="main">
-		<hgroup><!-- Used to group a heading with any secondary content, such as subheadings / taglines / timestamps -->
+		<hgroup class="uc_rich-text"><!-- Used to group a heading with any secondary content, such as subheadings / taglines / timestamps -->
 			<h1 class="uc_h1">Kitchen Sink</h1>
-			<p>This page in its entirety is a way to have examples of many of the main mark-up and styling patterns I use, it's not in itself meant to make sense or be "real content". There are tons of in-line comments. View the source.</p>
+			<p>This page in its entirety is a way to have examples of many of the main mark-up and styling patterns I use, it's not in itself meant to make sense or be "real content". There are tons of in-line comments.</p>
+			<p class="uc_callout">View the source of this page.</p>
 		</hgroup>
 
 		<article><!-- articles are discrete "islands" of content that make sense out of context. -->
-			<section><!-- <section> is used for generic blocks of content that have a heading. -->
+			<section class="uc_rich-text"><!-- <section> is used for generic blocks of content that have a heading. -->
 				<h2 class="uc_h2">Generic text elements</h2>
 				<p>There should be one and only one <code>h1</code> per page.</p>
 			</section>
 		</article>
 
 		<article><!-- articles are discrete "islands" of content that make sense out of context. -->
-			<section><!-- <section> is used for generic blocks of content that have a heading. -->
+			<section class="uc_rich-text"><!-- <section> is used for generic blocks of content that have a heading. -->
 				<h2 class="uc_h2">Tables</h2>
 
 				<p>Tables are a tricky from a practical perspective as they don't work well in confined spaces. Tables by definition use two dimensionality as a tool of semantics and presentation. So they are terrible when the screen they are being shown on is too small to fit the table into - one of your dimensions ends up too small to fit in the data.</p>
@@ -211,7 +212,7 @@
 		</article>
 
 		<article><!-- articles are discrete "islands" of content that make sense out of context. -->
-			<section><!-- <section> is used for generic blocks of content that have a heading. -->
+			<section class="uc_rich-text"><!-- <section> is used for generic blocks of content that have a heading. -->
 				<h2 class="uc_h2">Example form markup</h2>
 
 				<p>This is a standardised method to mark-up form content.</p>
@@ -229,7 +230,7 @@
 
 					<div class="context">
 						<!-- form > .context is where information related specifically to the form itself should go - as opposed to content addressing the wider context, or specific to fields and fieldsets -->
-						<section class="ui-instructions">
+						<section class="ui-instructions uc_rich-text">
 							<h2>Form Instructions</h2>
 							<p>This is where instructions for filling out the form can be added. For example:</p>
 							<ul>
@@ -237,7 +238,7 @@
 							</ul>
 						</section>
 
-						<section class="ui-error-message">
+						<section class="ui-error-message uc_rich-text">
 							<h2>Form Errors</h2>
 							<p>This is where errors with the form can be output.</p>
 							<p>For example, individual fieldsets may be valid, but the combination of values between fieldsets may not be considered valid:</p>
@@ -258,7 +259,7 @@
 
 							<div class="context">
 								<!-- .fieldset > .context is where information related specifically to this specific fieldset should go - as opposed to content addressing the wider context, or specific to fields -->
-								<section class="ui-instructions">
+								<section class="ui-instructions uc_rich-text">
 									<h2>Fieldset Instructions</h2>
 									<p>This is where instructions for filling out the fieldset can be added. For example:</p>
 									<ul>
@@ -266,7 +267,7 @@
 									</ul>
 								</section>
 
-								<section class="ui-error-message">
+								<section class="ui-error-message uc_rich-text">
 									<h2>Fieldset Error</h2>
 									<p>This is where errors with the fieldset can be output.</p>
 									<p>For example, the individual fields may be valid, but the combination of values may not be considered valid:</p>
@@ -308,12 +309,12 @@
 
 									<div class="context">
 										<!-- .formField > .context is where information related specifically to this specific fieldset should go - as opposed to content addressing the wider context, or specific to fields -->
-										<section class="ui-instructions" id="field-instructions">
+										<section class="ui-instructions uc_rich-text" id="field-instructions">
 											<h2>Field Instructions</h2>
 											<p>This is where instructions specific to this field can be added.</p>
 										</section>
 
-										<section class="ui-error-message" id="field-errors">
+										<section class="ui-error-message uc_rich-text" id="field-errors">
 											<h2>Field Error</h2>
 											<p>This is where errors with the field can be output:</p>
 											<ul>
@@ -479,7 +480,10 @@
 				</form>
 			</section>
 
-			<aside aria-label="More about forms"><!-- aside represents content indirectly related to the main block -->
+			<aside
+				aria-label="More about forms"
+				class="uc_rich-text"
+			><!-- aside represents content indirectly related to the main block -->
 				<h3 class="uc_h3">External resources</h3>
 				<ul>
 					<li>

@@ -4,6 +4,10 @@
 	<meta charset="utf-8" />
 	<meta name="viewport"
 	      content="width=device-width,initial-scale=1" />
+	<meta name="description"
+	      content="Accessible Markup Patterns" />
+	<meta name="view-transition"
+	      content="same-origin" /><!-- Opt into page transition animations. By default, they cross-fade. See https://smashing-transitions.netlify.app/page-transition-flag/ -->
 	<!-- LEARN MORE:
 	     What can go in the head, and why MUST those two go first?
 	     https://github.com/joshbuchea/HEAD#recommended-minimum
@@ -34,7 +38,12 @@
 		rel="stylesheet"
 		media="screen"
 		href="/design-assets/css/screen-core.css"
-	/>
+	/><!-- Read the screen-core.css file itself to understand more about how I use CSS -->
+	<link
+		rel="stylesheet"
+		media="screen"
+		href="/design-assets/css/screen-demo.css"
+	/><!-- this is a separate stylesheet purely for organisation of this demo project; in real projects the content of this file should likely go in the screen-core.css file -->
 
 	<!-- OPTIONAL: environmental state indicators.
 	     Add environmental state indicator classes to the HTML element as soon as possible.
@@ -60,9 +69,12 @@
 	<a href="#main" class="skiplink uc_hide-visually">Skip navigation and jump to content</a>
 
 	<header>
-		<h1>Native Base</h1>
-		<nav aria-label="Site Navigation">
-			<ul>
+		<h1 class="uc_h1">Native Base</h1><!-- Actual h1 elements should always be the title of the document, and there should be only one per document. Here we use a Utility Class to give the _visual style_ of a h1, but without relying on the semantics of the element itself. -->
+		<nav
+			aria-label="Site Navigation"
+			class="navSite"
+		><!-- aria-label is used to explicitly describe which navigation this is, for screen readers. -->
+			<ul role="list"><!-- Lists that use CSS to remove bullets MUST have role="list" to retain their meaning in screen readers. -->
 				<li>
 					<a href="/" aria-current="page">Home</a><!-- aria-current should be on the link for the current URL only -->
 				</li>
@@ -70,16 +82,24 @@
 					<a href="/kitchen-sink">Kitchen Sink</a>
 				</li>
 			</ul>
+			<!--
+				NOTE:
+				Choices regarding how site navigation is marked-up can have implications on the performance of web projects once a CMS is involved.
+
+				Site navigation may be editable by someone in the CMS. Ideally, site navigation and other chunks of mark-up that are identical between multiple pages should be generated only once by the CMS. This allows it to be generated once, cached once, and included on all other pages. This is a fast and efficient way to use server resources. However, things like an `aria-current="page"` applied in mark-up for the navigation mean that the navigation itself becomes unique per-page instead of identical over all pages, and what was a simple resource-light include must now be generated dynamically per page (and possibly cached per page).
+
+				One method to try and get the best of both worlds is to use JS so that the client's browser adds the `aria-current="page"` to the correct element, instead of the server needing to do this. It does mean that an accessibility enhancement becomes reliant on JS being enabled, but this is one of those choices that need to be considered per project.
+			-->
 		</nav>
 	</header>
 
 	<main id="main">
-		<article>
+		<article class="uc_rich-text">
 			<h2>Context</h2>
 			<p>Native Base is a pure HTML/CSS/JS "starter" system for 2023, aiming for best-practice patterns as a starting place upon which to build other projects. <a href="https://github.com/MattWilcox/native-base">Learn more about this project's goals on GitHub</a>.</p>
 		</article>
 
-		<article>
+		<article class="uc_rich-text">
 			<h2>Coding Style</h2>
 			<ul>
 				<li>Tabs for indentation</li>
@@ -91,7 +111,7 @@
 			<p>Virtually any other coding style I'm flexible on.</p>
 		</article>
 
-		<article>
+		<article class="uc_rich-text">
 			<h2>Comments</h2>
 			<p>When a server sends HTML it should ideally be configured to minify and compress the mark-up, which removes HTML comments too. As such; liberally comment your code. It has no impact on the end product, and it will help others - and yourself - understand what you were thinking, referencing, and doing at the time.</p>
 			<p>If you're working in a templating language, it may make sense to use the template languages comments rather than HTML's more verbose comment syntax.</p>

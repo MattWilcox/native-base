@@ -4,7 +4,7 @@
 
 		- This file is _always_ loaded, it's referenced in the <head> of all pages.
 		- It should therefor contain styles that are _very likely_ to be used on the majority of pages, and avoid styles for things that are unlikely to appear on many pages. Those styles should belong in their own stylesheet, and be loaded only when needed.
-		- This is meant to strike something of a balance between practicality and "critical CSS" which is almost never worth the effort or build steps required.
+		- This is meant to strike something of a balance between practicality and the theoretical goodness of "critical CSS" - which is almost never worth the effort or build steps required.
 
 	# CSS Cascade Layers
 
@@ -25,7 +25,7 @@
 			The actual design of the site. How components look, how things are laid out, page specific styling, etc.
 
 		Utilities:
-			For the rare case where it makes sense, utility classes should override everything else. e.g., heading styles should _not_ be mapped to HTML heading level, but it's handy to map to a class given how stable heading style is over viewport sizes.
+			For the rare case where it makes sense, utility classes should override everything else. e.g., heading styles should _not_ be mapped to HTML heading level, but it's handy to map to a utility class given how stable heading style is over viewport sizes.
 */
 
 @layer reset {
@@ -129,6 +129,7 @@
 		*:focus { /* fallback for older browsers that don't support 'focus-visible' */
 			outline: max(2px, 0.2em) solid currentColor !important;
 			outline-offset: 0.25em; z-index: 1000;
+			scroll-padding-block-end: 10vh; /* ensure it's in the viewport */
 		}
 
 		@supports selector(:focus-visible) {
@@ -141,6 +142,10 @@
 				outline: max(2px, 0.2em) solid currentColor !important;
 				outline-offset: 0.25em; z-index: 1000;
 			}
+		}
+
+		:target { /* ensure it's clearly in the viewport */
+			scroll-padding-block-start: 2rem;
 		}
 
 	/* # CSS Custom Properties
@@ -346,18 +351,21 @@
 }
 
 @layer utilities {
-	.uc_h1,
-	.uc_h2,
-	.uc_h3 {
+	/* Heading styles should not be set on the naked elements. Doing so often encourages people to use the _wrong_ heading level purely to get the _right_ look. */
+	:where(
+		.uc_h1,
+		.uc_h2,
+		.uc_h3
+	 ) {
 		font-family:    var(--font-family-headings);
 		font-weight:    bold;
 		letter-spacing: var(--letter-spacing);
 		text-wrap: balance;
 	}
 
-	.uc_h1 { font-size: var(--font-size-heading-large) }
-	.uc_h2 { font-size: var(--font-size-heading) }
-	.uc_h3 { font-size: var(--font-size-heading-small) }
+	:where(.uc_h1) { font-size: var(--font-size-heading-large) }
+	:where(.uc_h2) { font-size: var(--font-size-heading) }
+	:where(.uc_h3) { font-size: var(--font-size-heading-small) }
 
 	:where(.uc_uppercase) {
 		text-transform: uppercase;
@@ -392,5 +400,16 @@
 	}
 	:where(.uc_button):hover {
 		background-color: hsl( var(--brand-colour) / 1 );
+	}
+
+	/* Styling "chunks" of text that contain multiple types of mark-up, such as paragraphs, ul, li, etc */
+	:where(.uc_rich-text) {
+		& > * + * {
+			margin-block-start: var(--gap);
+		}
+
+		& li + li {
+			margin-block-start: calc( var(--gap) * 0.5 );
+		}
 	}
 }

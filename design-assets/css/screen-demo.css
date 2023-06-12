@@ -1,4 +1,12 @@
-@layer defaults {
+/*
+	# SCREEN-DEMO.CSS
+	You should start at the `screen-core.css` file.
+
+	This file contains styling purely to make the example markup and content look "visually nice", and is deliberately in its own file so that it can be completely tossed away, leaving you with the _actual_ core styles I work with before implementing a design.
+
+	It is its own island of stuff that can and should be ignored.
+*/
+	@layer defaults {
 	/* # Font Imports */
 	@font-face {
 		font-family: 'Poppins';
@@ -55,6 +63,12 @@
 		font-weight: bold; font-style: normal;
 		font-display: swap;
 	}
+
+	/* Colours */
+	:root {
+		--colour-callout: 133 33% 66%;
+		--colour-callout-contrast: 133 33% 100%;
+	}
 }
 
 @layer design {
@@ -95,6 +109,51 @@
 		border-block-start: 1px solid currentColor;
 	}
 
+	:where(.uc_rich-text) {
+		&:not([data-allow-long-lines]) > * {
+			max-inline-size: 72ch; /* Don't allow hard to read line-lengths */
+		}
+
+		& h2 {
+			font-size: var(--font-size-heading);
+		}
+		& h3 {
+			font-size: var(--font-size-heading-small);
+		}
+		& h4 {
+			font-size: var(--font-size-promoted);
+		}
+
+		& a:not([class]) { /* Anchors that have a class likely have some unique styling */
+			text-decoration: underline;
+			text-underline-offset: 0.15em;
+		}
+
+		& ol {
+			margin-left: 1.7em;
+
+			& li::marker {
+				font-family: monospace; font-size: 0.875em;
+			}
+		}
+
+		& ul {
+			margin-left: 1.2em;
+		}
+
+		& blockquote {
+			padding: 1em; margin-bottom: 1em;
+
+			& p:last-child {
+				margin-bottom: 0;
+			}
+		}
+
+		& iframe {
+			display: block; margin-bottom: 2em;
+		}
+	}
+
 	.navSite ul {
 		display: flex; flex-wrap: wrap; gap: var(--gap);
 	}
@@ -120,5 +179,13 @@
 		:where(h1,h2,h3,h4,h5,h6) {
 			font-weight: bold;
 		}
+	}
+}
+
+@layer utilities {
+	:where(.uc_callout) {
+		padding: 0.25em .5em;
+		background-color: hsl( var(--colour-callout) );
+		color: hsl( var(--colour-callout-contrast) );
 	}
 }
