@@ -31,7 +31,7 @@
 	}
 
 	legend {
-		margin-inline-start: calc( 0px - var(--indent) );
+		margin-block-end: var(--gap);
 		text-transform: uppercase; letter-spacing: -0.025em; font-size: var(--font-size-heading-small);
 	}
 
@@ -102,20 +102,22 @@
 		margin-top: calc( var(--gap) * 2 );
 	}
 
-	.fieldset {
-		padding-inline-start: var(--indent);
+	fieldset:has( *[required] ) {
+		& legend {
+			display: flex; width: 100%; justify-content: space-between; align-items: baseline;
 
-		&:has( *[required] ) {
-			& legend {
-				display: flex; justify-content: space-between; align-items: baseline;
-
-				&:after {
-					content: "contains required fields";
-					opacity: 0.5;
-					font-size: 1rem;
-				}
+			&:after {
+				content: "contains required fields";
+				opacity: 0.5;
+				font-size: 1rem;
 			}
 		}
+	}
+
+	.fauxFieldset {
+		border: 2px solid hsl( var(--brand-colour) );
+		border-radius: var(--input-border-radius);
+		padding: var(--indent);
 
 		& > * + * {
 			margin-top: var(--gap);
@@ -137,12 +139,12 @@
 	}
 
 	fieldset + fieldset {
-		margin-block-start: var(--gap);
+		margin-block-start: calc( var(--gap) * 2 );
 	}
 
 	.formField {
 		& + .formField {
-			margin-block-start: var(--gap);
+			margin-block-start: calc( var(--gap) * 2 );
 		}
 
 		& label { /* split the status indicator away from the label */
@@ -203,12 +205,8 @@
 		& input { order: 1; }
 	}
 
-	.formActions {
-		display: flex; align-items: center; justify-content: space-between;
-		margin-top: var(--gap);
-
-		& > * { margin-right: 1em; }
-		& > *:last-child { margin-right: 0; }
+	.form-actions {
+		display: flex; align-items: center; gap: var(--gap);
 	}
 
 	.previouslyUploaded {

@@ -79,7 +79,7 @@
 					<a href="/" aria-current="page">Home</a><!-- aria-current should be on the link for the current URL only -->
 				</li>
 				<li>
-					<a href="/kitchen-sink">Kitchen Sink</a>
+					<a href="/kitchen-sink.html">Kitchen Sink</a>
 				</li>
 			</ul>
 			<!--
@@ -96,24 +96,29 @@
 	<main id="main">
 		<article class="uc_rich-text">
 			<h2 class="uc_h2">Context</h2>
-			<p>Native Base is a pure HTML/CSS/JS "starter" system for 2023, aiming for best-practice patterns as a starting place upon which to build other projects. <a href="https://github.com/MattWilcox/native-base">Learn more about this project's goals on GitHub</a>.</p>
+			<p>Native Base is a pure HTML/CSS/JS example repository for 2023, aiming for best-practice patterns and to be used as a starting place upon which to build other projects. View the source code. <a href="https://github.com/MattWilcox/native-base">Learn more about this project's goals on GitHub</a>.</p>
 		</article>
 
 		<article class="uc_rich-text">
-			<h2 class="uc_h2">Coding Style</h2>
+			<h2 class="uc_h2">Code style</h2>
 			<ul>
 				<li>Tabs for indentation</li>
 				<li>Spaces for alignment</li>
 			</ul>
 			<p>Tabs should be used for indentation, because:</p>
-			<p>Tab width is configurable by the person looking at the code. If they prefer a tab to be 2, or 4, or 8 spaces wide they can set that in their editor. Just as they can set line heights. So can you. Further, screen reader technology handles tabbed indentation better than spaces used for indentation.</p>
-			<p>Using tabs is being respectful of other people. It does not stop your own editor from displaying exactly how you want it, and it allows others to have it how they want it.</p>
-			<p>Virtually any other coding style I'm flexible on.</p>
+			<ul>
+				<li>Screen reader technology such as <a href="https://github.com/prettier/prettier/issues/7475#issuecomment-668544890">Braille displays handle tabbed indentation better than spaces used for indentation</a>.</li>
+				<li>Tab width is configurable by the person looking at the code, who may have <a href="https://adamtuttle.codes/blog/2021/tabs-vs-spaces-its-an-accessibility-issue/">vision issues</a>. If they prefer a tab to be 2, or 4, or 8 spaces wide they can set that in their editor. Just as they can set line heights. So can you.</li>
+				<li>Using tabs is being respectful of other people. It does not stop your own editor from displaying exactly how you want it, and it allows others to have it how they want it.</li>
+			</ul>
+
+			<p>I'm pretty strict about my indentation, because I use <a href="https://en.wikipedia.org/wiki/Code_folding">code-folding</a> heavily. Code folding allows me to collapse sections of code that are not relevant to the current task, which removes them from my mind so I can concentrate on what I'm working on without visual clutter.</p>
 		</article>
 
 		<article class="uc_rich-text">
-			<h2 class="uc_h2">Comments</h2>
-			<p>When a server sends HTML it should ideally be configured to minify and compress the mark-up, which removes HTML comments too. As such; liberally comment your code. It has no impact on the end product, and it will help others - and yourself - understand what you were thinking, referencing, and doing at the time.</p>
+			<h2 class="uc_h2">Code comments</h2>
+			<p>I try to comment liberally.</p>
+			<p>When a server sends HTML it should be configured to minify and compress the mark-up, which removes HTML comments too. Code comments have no impact on the end product, and liberally using them will help others - and yourself - understand what you were thinking, referencing, and doing at the time you wrote the code.</p>
 			<p>If you're working in a templating language, it may make sense to use the template languages comments rather than HTML's more verbose comment syntax.</p>
 		</article>
 	</main>

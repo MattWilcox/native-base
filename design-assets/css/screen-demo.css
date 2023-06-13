@@ -2,11 +2,14 @@
 	# SCREEN-DEMO.CSS
 	You should start at the `screen-core.css` file.
 
-	This file contains styling purely to make the example markup and content look "visually nice", and is deliberately in its own file so that it can be completely tossed away, leaving you with the _actual_ core styles I work with before implementing a design.
+	This file is purely to make the bare-bones example markup look vaguely acceptable.
+	It is intended to be tossed out, and for you to write your own design styles - partly in `screen-core.css` and partly wherever else makes sense for you.
 
-	It is its own island of stuff that can and should be ignored.
+	Read more about the ideas for CSS organisation here:
+	URL HERE
 */
-	@layer defaults {
+
+@layer defaults {
 	/* # Font Imports */
 	@font-face {
 		font-family: 'Poppins';
@@ -72,14 +75,6 @@
 }
 
 @layer design {
-	/*
-		This file is purely to make the bare-bones example markup look vaguely acceptable.
-		It is intended to be tossed out, and for you to write your own design styles - partly in `screen-core.css` and partly wherever else makes sense for you.
-
-		Read more about the ideas for CSS organisation here:
-		URL HERE
-	*/
-
 	.skiplink {
 		position: absolute; inset: 0 0 auto 0;
 		padding-block: 0.5em;
@@ -96,21 +91,69 @@
 		padding-inline: var(--gap);
 	}
 	main > * + * {
+		/* This method of getting vertical spacing may end up redundant if margin-trim lands: https://developer.mozilla.org/en-US/docs/Web/CSS/margin-trim */
 		margin-block-start: var(--gap);
 	}
 
 	header {
+		container: header / inline-size; /* The container is named "header" */
 		padding-block: var(--gap); margin-block-end: var(--gap);
 		border-block-end: 1px solid currentColor;
+
+		.uc_h1 {
+			text-align: center;
+			margin-block-end: var(--gap);
+		}
+	}
+
+	.navSite {
+		& form {
+			display: flex;
+			align-items: flex-end;
+			gap: calc( var(--gap) * 0.5 );
+
+			& > * + * {
+				margin-block-start: 0;
+			}
+		}
+
+		& label:after { /* We don't care about the "required" enhancement here */
+			display: none;
+		}
+
+		.fieldWrapper {
+			margin-block-start: 0;
+		}
+
+		& ul {
+			display: flex; flex-wrap: wrap; gap: var(--gap);
+			align-items: center;
+		}
+
+		@container header (max-width: 639px) {
+			& search {
+				display: block;
+				margin-block-start: var(--gap);
+			}
+			.formField {
+				flex-grow: 1;
+			}
+		}
+
+		@container header (min-width: 640px) {
+			& {
+				display: flex; justify-content: space-between;
+			}
+
+			& #searchTerm {
+				width: 200px;
+			}
+		}
 	}
 
 	footer {
 		padding-block: var(--gap); margin-block-start: var(--gap);
 		border-block-start: 1px solid currentColor;
-	}
-
-	.navSite ul {
-		display: flex; flex-wrap: wrap; gap: var(--gap);
 	}
 
 	a[aria-current="page"] {
@@ -124,6 +167,12 @@
 
 	article:has( > section + aside ) { /* Firefox doesn't have native support yet... */
 		display: grid; grid-template-columns: 3fr 1fr; gap: calc(2 * var(--gap));
+	}
+
+	figure {
+		&.example {
+			border: 1px solid currentColor; padding: var(--gap);
+		}
 	}
 
 	/* Adjust the font weight when we hit the full "20px" base size */
@@ -142,5 +191,15 @@
 		padding: 0.25em .5em;
 		background-color: hsl( var(--colour-callout) );
 		color: hsl( var(--colour-callout-contrast) );
+	}
+
+	:where(.uc_uppercase) {
+		text-transform: uppercase;
+		letter-spacing: calc( (var(--ps-letter-spacing, 40) / 1000) * 1em );
+	}
+	:where(.uc_uppercase-adjusted) { /* Upper case characters sized down to look visually the same height as lower */
+		text-transform: uppercase;
+		letter-spacing: calc( (var(--ps-letter-spacing, 40) / 1000) * 1em );
+		font-size: 0.875em;
 	}
 }

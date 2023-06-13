@@ -3,7 +3,7 @@
 	# SCREEN-CORE.CSS
 
 		- This file is _always_ loaded, it's referenced in the <head> of all pages.
-		- It should therefor contain styles that are _very likely_ to be used on the majority of pages, and avoid styles for things that are unlikely to appear on many pages. Those styles should belong in their own stylesheet, and be loaded only when needed.
+		- It should therefor contain styles that are _very likely_ to be used on the majority of pages, and should avoid styles for things that are unlikely to appear on many pages. _Those_ styles belong in their own stylesheet, and should be loaded on a page only when needed.
 		- This is meant to strike something of a balance between practicality and the theoretical goodness of "critical CSS" - which is almost never worth the effort or build steps required.
 
 	# CSS Cascade Layers
@@ -19,13 +19,13 @@
 			Undo inconsistent default browsers styles, so there are no differences between them.
 
 		Defaults:
-			Styles for "default" elements and "core level" markup. E.g., Fonts, Headings, how a <p> or <em> etc look by default, or how a basic form looks - without any component or page specific over-rides.
+			Styles for "default" elements and "core level" markup. E.g., Fonts, Headings, how a <p> or <em> etc look by default, or how a basic form looks - without any component or page specific design over-rides.
 
 		Design:
 			The actual design of the site. How components look, how things are laid out, page specific styling, etc.
 
 		Utilities:
-			For the rare case where it makes sense, utility classes should override everything else. e.g., heading styles should _not_ be mapped to HTML heading level, but it's handy to map to a utility class given how stable heading style is over viewport sizes.
+			For the rare case where it makes sense, utility classes should override everything else. e.g., heading styles should _not_ be mapped to HTML heading level, but it's handy to map to a utility class.
 */
 
 @layer reset {
@@ -50,7 +50,11 @@
 	/* Any CSS that would remove the bullet or number indicators of a list’s items will also remove the semantics.
 	   REFERENCE: https://www.scottohara.me/blog/2019/01/12/lists-and-safari.html
 
-	   So here, we only allow visually removing a bullet if the markup explicitly adds back the list semantics through having a role='list' property value */
+	   So here we allow visually removing a bullet only if the markup explicitly adds back the list semantics through having a role='list' property value.
+
+	   TL:DR;
+	   To get rid of a bullet, add `role="list"` to the UL or OL element.
+	*/
 	:where(ul, ol)[role='list'] {
 		list-style: none;
 	}
@@ -72,8 +76,10 @@
 		touch-action: manipulation;               /* faster taps as long as we're not zooming etc */
 		-webkit-tap-highlight-color: transparent; /* No, Safari */
 	}
-	:where([disabled]) { /* if anything is marked as disabled, the cursor should reflect that status */
+	:where([disabled]),
+	:where([disabled]) * { /* if anything is marked as disabled, the cursor should reflect that status */
 		cursor: not-allowed;
+		filter: grayscale(1);
 	}
 
 	/* Remove all animations, transitions and smooth scroll for people that prefer not to see them */
@@ -92,23 +98,36 @@
 		}
 	}
 
-	/* Don't collapse these into one ruleset. When a browser doesn't recognise a selector it discards the whole ruleset.
-	   By using vendor selectors in one ruleset you guarantee nothing will be applied */
-		::-webkit-selection { background-color: hsl( var(--brand-colour, 100 20% 20%) ); color: #fff; }
-		::-moz-selection    { background-color: hsl( var(--brand-colour, 100 20% 20%) ); color: #fff; }
-		::selection         { background-color: hsl( var(--brand-colour, 100 20% 20%) ); color: #fff; }
+	/* Becuase :is() is a forgiving selector, we can add multiple rules that might be unrecognised by the browser - and if a selector matches the rules are applied to that selector match.
 
-		::-webkit-input-placeholder { font-size: 1em; }
-		input:-moz-placeholder      { font-size: 1em; }
-		::placeholder               { font-size: 1em; }
+	Without using :is(), when a browser doesn't recognise a single selector in a selector list the browser will discards the whole ruleset. */
+		:is(
+			::-webkit-selection,
+			::-moz-selection,
+			::selection
+		) {
+			background-color: hsl( var(--brand-colour, 100 20% 20%) );
+			color: #fff;
+		}
+
+		:is(
+			::-webkit-input-placeholder,
+			input:-moz-placeholder,
+			::placeholder
+		) {
+			font-size: 1em;
+		}
 
 		/* kill default HTML5 styling on webkit */
 		input[type=search],
 		input[type=submit] {
 			-webkit-appearance : none;
 		}
-		input[type="search"]::-webkit-search-decoration,
-		input[type="search"]::-webkit-search-cancel-button {
+		input[type="search"]:is(
+			::-webkit-search-decoration,
+			::-webkit-search-cancel-button
+		),
+		::-webkit-details-marker {
 			display: none;
 		}
 }
@@ -241,20 +260,13 @@
 		a:focus,
 		a:active  { outline-color: transparent; } /* Not "0 outline" as that wouldn't be accessible for high contrast etc */
 
-		[id] {
-			scroll-margin-top: 5vh; /* ensure there's a bit of headroom on all possible scroll targets */
-		}
-
-	/* # HTML "Components" - some HTML stuff is more mark-up patterns more than individual elements */
+	/* # HTML "Components" - some basic HTML stuff is now more mark-up pattern than individual elements */
 		/* ## Details */
 			details > summary {
 				list-style-type: none;
 				padding: 0.5em var(--gap) 0.25em 0; border: 1px solid transparent; border-bottom-color: currentColor;
 				background: transparent url(/design-assets/images/plus.svg) 100% 5px no-repeat;
 				cursor: pointer;
-			}
-			details > summary::-webkit-details-marker {
-				display: none;
 			}
 			details > summary:focus {
 				text-decoration: none;
@@ -344,14 +356,18 @@
 @layer design {
 	/*
 		This is where you would add the CSS for your design.
-		There is nothing here, so that the file can be duplicated easily as a starting place.
-		Instead, the styles for the demo site are stored in `screen-demo.css` and are slotted into the design layer.
+
+		There is nothing here, so that the file can be duplicated easily as a starting point for other projects.
+
+		The styles for the demo site are stored in `screen-demo.css` and are slotted into the design layer.
 		Just removing that file brings things back to a "standard" blank starting position ready for any project.
 	*/
 }
 
 @layer utilities {
-	/* Heading styles should not be set on the naked elements. Doing so often encourages people to use the _wrong_ heading level purely to get the _right_ look. */
+	/* Utility classes start with a uc_ prefix, so they're obvious in markup */
+
+	/* Heading styles should not be set on the naked elements. Doing so often encourages people to use the wrong heading level purely to get the right look. Instead, use the right semantic heading level and apply a class to get the appropriate look. */
 	:where(
 		.uc_h1,
 		.uc_h2,
@@ -366,16 +382,6 @@
 	:where(.uc_h1) { font-size: var(--font-size-heading-large) }
 	:where(.uc_h2) { font-size: var(--font-size-heading) }
 	:where(.uc_h3) { font-size: var(--font-size-heading-small) }
-
-	:where(.uc_uppercase) {
-		text-transform: uppercase;
-		letter-spacing: calc( (var(--ps-letter-spacing, 40) / 1000) * 1em );
-	}
-	:where(.uc_uppercase-adjusted) { /* Upper case characters sized down to look visually the same height as lower */
-		text-transform: uppercase;
-		letter-spacing: calc( (var(--ps-letter-spacing, 40) / 1000) * 1em );
-		font-size: 0.875em;
-	}
 
 	:where(.uc_hide-visually):not(:focus):not(:active) { /* screen readers still get the content */
 		/* Source:
@@ -392,9 +398,10 @@
 
 	:where(.uc_button) {
 		display: inline-flex; align-items: center; gap: calc( var(--gap) / 2 );
-		padding: calc( var(--gap) / 2 ); border-radius: 0.5em;
+		padding: var(--input-padding);
+		border: 2px solid transparent; border-radius: var(--input-border-radius);
 		background-color: hsl( var(--brand-colour) / 0.75 );
-		font-size: 0.875em; text-transform: uppercase; letter-spacing: calc( (var(--ps-letter-spacing, 40) / 1000) * 1em );
+		letter-spacing: calc( (var(--ps-letter-spacing, 40) / 1000) * 1em );
 		color: hsl( var(--white) ) !important;
 		transition: background-color, var(--fast);
 	}
@@ -405,12 +412,31 @@
 	/* Styling "blocks" of text such as from a Rich Text Editor, that contains multiple types of mostly text mark-up, such as paragraphs, ul, li, etc */
 	:where(.uc_rich-text) {
 		& > * + * {
+			/* This method of getting vertical spacing may end up redundant if margin-trim lands: https://developer.mozilla.org/en-US/docs/Web/CSS/margin-trim */
 			margin-block-start: var(--gap);
 		}
 
 		&:not([data-allow-long-lines]) > * {
-			max-inline-size: 72ch; /* Don't allow hard to read line-lengths unless there's a data attribute to say to */
+			max-inline-size: 72ch; /* Don't allow hard to read line-lengths unless there's a data attribute to say to allow it */
 		}
+
+		/*
+			Styling Headings
+
+			This is where CSS's lack of "mixin" feature hurts. In a "rich text" area, it's unlikely that the CMS would allow the addition of classes to headings - and even if it did many people aren't going to do that. So, we must try to scope our heading styles onto "raw heading tags" when we're inside a Rich Text area. That's what I'm doing here - if a heading *does not have a utility class on it* then we apply these styles to it.
+
+			In an ideal world we'd define our heading styles as re-usable chunks of CSS rulesets, and include them where we need them. Something like:
+
+			@mixin h1 {
+				// all the visual styles that make up a h1
+			}
+
+			.anything {
+				@output-mixin h1; // dumps all those styles into this selector ruleset
+			}
+
+			But no such pattern exists in CSS and the alternative - add the selectors you want to the same ruleset - is a method that disallows all sorts of organisational methodology in authoring.
+		*/
 
 		& h2:not([class*="uc_h"]) { /* A h2 that doesn't have any heading related utility class on it */
 			font-size: var(--font-size-heading);
@@ -425,6 +451,10 @@
 		& a:not([class]) { /* Anchors that have a class likely have some unique styling */
 			text-decoration: underline;
 			text-underline-offset: 0.15em;
+		}
+
+		& li + li {
+			margin-block-start: 0.5em;
 		}
 
 		& ol {

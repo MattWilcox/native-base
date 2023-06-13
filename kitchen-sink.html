@@ -94,11 +94,11 @@
 			-->
 
 			<search role="search" aria-label="Site wide"><!-- search is a new tag for 2023 https://html.spec.whatwg.org/multipage/grouping-content.html#the-search-element -->
-				<form action="/search-results">
+				<form action="">
 					<div class="formField"><!-- Why this markup? Read TODO:LINK -->
 						<div class="fieldWrapper">
-							<label for="searchTerm">
-								Search
+							<label for="searchTerm" class="uc_hide-visually">
+								Site Search
 							</label>
 							<input
 								type="text"
@@ -126,8 +126,40 @@
 
 		<article><!-- articles are discrete "islands" of content that make sense out of context. -->
 			<section class="uc_rich-text"><!-- <section> is used for generic blocks of content that have a heading. -->
-				<h2 class="uc_h2">Generic text elements</h2>
-				<p>There should be one and only one <code>h1</code> per page.</p>
+				<h2 class="uc_h2">Headings</h2>
+				<ul>
+					<li>There should be only one <code>h1</code> per page.</li>
+					<li>Styles should not be set on naked heading elements.</li>
+					<li>Heading styles should be applied via utility class.</li>
+				</ul>
+
+				<figure class="example" id="fig1"><!-- https://html.spec.whatwg.org/multipage/grouping-content.html#the-figure-element -->
+					<figcaption>Example Headings</figcaption>
+					<p class="uc_h1">Heading level 1</p>
+					<p class="uc_h2">Heading level 2</p>
+					<p class="uc_h3">Heading level 3</p>
+					<p class="uc_h4">Heading level 4</p>
+				</figure>
+			</section>
+
+			<section>
+				<h2 class="uc_h2">Figure and FigCaption</h2>
+
+				<figure>
+				 <figcaption>The top 10 movies of all time</figcaption>
+				 <ol>
+					<li value="10"><cite>Josie and the Pussycats</cite>, 2001</li>
+					<li value="9"><cite lang="sh">Црна мачка, бели мачор</cite>, 1998</li>
+					<li value="8"><cite>A Bug's Life</cite>, 1998</li>
+					<li value="7"><cite>Toy Story</cite>, 1995</li>
+					<li value="6"><cite>Monsters, Inc</cite>, 2001</li>
+					<li value="5"><cite>Cars</cite>, 2006</li>
+					<li value="4"><cite>Toy Story 2</cite>, 1999</li>
+					<li value="3"><cite>Finding Nemo</cite>, 2003</li>
+					<li value="2"><cite>The Incredibles</cite>, 2004</li>
+					<li value="1"><cite>Ratatouille</cite>, 2007</li>
+				 </ol>
+				</figure>
 			</section>
 		</article>
 
@@ -249,14 +281,14 @@
 					</div>
 
 					<fieldset>
-						<div class="fieldset">
-							<!-- IS THIS STILL TRUE????
-								A "faux fieldset" is used as the immediate child of <fieldset> only because browser implementation issues mean that <fieldset> itself can not reliably have display:flex or display:grid set on them.
+						<legend>Fieldset Legend</legend>
+
+						<div class="fauxFieldset">
+							<!--
+								A "faux fieldset" is used only because browser implementation issues mean that <fieldset> and <legend> are quirky with display:flex or display:grid set. This is a workaround.
 
 								REFERENCE: https://developer.mozilla.org/en-US/docs/Web/HTML/Element/fieldset
 							-->
-							<legend>Fieldset Legend</legend>
-
 							<div class="context">
 								<!-- .fieldset > .context is where information related specifically to this specific fieldset should go - as opposed to content addressing the wider context, or specific to fields -->
 								<section class="ui-instructions uc_rich-text">
@@ -411,14 +443,14 @@
 					</fieldset>
 
 					<fieldset>
-						<div class="fieldset">
-							<legend>Another Fieldset</legend>
+						<legend>Another Fieldset</legend>
 
+						<div class="fauxFieldset">
 							<div class="theFields">
-								<fieldset>
-									<div class="fieldset">
-										<legend>Radioset One</legend>
+								<fieldset disabled>
+									<legend>Radio-set One</legend>
 
+									<div class="fauxFieldset">
 										<div class="theFields">
 											<div class="formField">
 												<div class="fieldWrapper">
@@ -445,9 +477,9 @@
 								</fieldset>
 
 								<fieldset>
-									<div class="fieldset">
-										<legend>Checkbox group</legend>
+									<legend>Checkbox group</legend>
 
+									<div class="fauxFieldset">
 										<div class="theFields">
 											<div class="formField">
 												<div class="fieldWrapper">
