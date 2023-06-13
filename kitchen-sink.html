@@ -53,7 +53,7 @@
 	<script type="module">
 		const htmlElement = document.querySelector('html');
 
-		htmlElement.dataset.jsAvailable = true;
+		htmlElement.dataset.jsAvailable = 'true';
 
 		document.onreadystatechange = (e) => {
 			htmlElement.dataset.domReadyState = e.target.readyState;
@@ -135,7 +135,7 @@
 			<section class="uc_rich-text"><!-- <section> is used for generic blocks of content that have a heading. -->
 				<h2 class="uc_h2">Tables</h2>
 
-				<p>Tables are a tricky from a practical perspective as they don't work well in confined spaces. Tables by definition use two dimensionality as a tool of semantics and presentation. So they are terrible when the screen they are being shown on is too small to fit the table into - one of your dimensions ends up too small to fit in the data.</p>
+				<p>Tables are a tricky from a practical perspective as they don't work well in confined spaces. Tables by definition use two-dimensionality as a tool of semantics and presentation. So they are terrible when the screen they are being shown on is too small to fit the table into - one of your dimensions ends up too small to fit in the data.</p>
 
 				<p>Tables tend to work well only on larger screens, and so you should make sure you have a good reason for displaying tabular data, and prefer other solutions if practical.</p>
 
@@ -250,7 +250,7 @@
 
 					<fieldset>
 						<div class="fieldset">
-							<!--
+							<!-- IS THIS STILL TRUE????
 								A "faux fieldset" is used as the immediate child of <fieldset> only because browser implementation issues mean that <fieldset> itself can not reliably have display:flex or display:grid set on them.
 
 								REFERENCE: https://developer.mozilla.org/en-US/docs/Web/HTML/Element/fieldset
@@ -284,6 +284,7 @@
 
 										<select
 											name="fieldName"
+											id="fieldName"
 											aria-details="field-instructions field-errors"
 											required
 										>
@@ -492,7 +493,7 @@
 						<a href="https://html.spec.whatwg.org/multipage/forms.html#forms">HTML spec for Forms</a>
 					</li>
 					<li>
-						<a href="https://www.w3.org/WAI/tutorials/forms">Web Accessibillity Initiative; Forms tutorial</a>
+						<a href="https://www.w3.org/WAI/tutorials/forms">Web Accessibility Initiative; Forms tutorial</a>
 					</li>
 				</ul>
 			</aside>
