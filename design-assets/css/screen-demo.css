@@ -170,8 +170,17 @@
 	}
 
 	figure {
+		& figcaption {
+			padding: 0.5em 1em; border-bottom: 1px solid currentColor;
+		}
 		&.example {
-			border: 1px solid currentColor; padding: var(--gap);
+			border: 1px solid currentColor;
+		}
+		& .theContent {
+			padding: var(--gap);
+			& > * + * {
+				margin-block-start: var(--gap);
+			}
 		}
 	}
 
