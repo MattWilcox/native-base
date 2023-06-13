@@ -14,18 +14,18 @@ export default class FetchWrapper {
 	}
 
 	put(endpoint, body) {
-		return this._send("put", endpoint, body);
+		return this.#send("put", endpoint, body);
 	}
 
 	post(endpoint, body) {
-		return this._send("post", endpoint, body);
+		return this.#send("post", endpoint, body);
 	}
 
 	delete(endpoint, body) {
-		return this._send("delete", endpoint, body);
+		return this.#send("delete", endpoint, body);
 	}
 
-	_send(method, endpoint, body) {
+	#send(method, endpoint, body) {
 		return fetch(this.baseURL + endpoint, {
 			method,
 			headers: {
