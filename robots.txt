@@ -1,0 +1,3 @@
+# Disallow ChatGPT from consuming the content of the site. There is no search benefit to their scraping things, all they do is steal content for their own profit, attribution free.
+User-agent: GPTBot
+Disallow: /
