@@ -1,3 +1,28 @@
-# Disallow ChatGPT from consuming the content of the site. There is no search benefit to their scraping things, all they do is steal content for their own profit, attribution free.
+# There is no search benefit to any AI models scraping sites - all they do is steal content for their own profit, attribution free, which leads to them serving our content without ever sending users to us.
+# Reference: https://neil-clarke.com/block-the-bots-that-feed-ai-models-by-scraping-your-website/
+
+## https://commoncrawl.org/faq - Has been used by ChatGPT, Bard, and others for training a number of models.
+User-agent: CCBot
+Disallow: /
+
+## The bot used when a ChatGPT user instructs it to reference your website.
+User-agent: ChatGPT-User
+Disallow: /
+
+## The bot that OpenAI uses to collect bulk training data for ChatGPT.
 User-agent: GPTBot
+Disallow: /
+
+## Block Google from scraping your site for Bard and VertexAI.
+User-agent: Google-Extended
+Disallow: /
+
+## Omgili sell data they scrape to others for their AI training.
+User-agent: Omgilibot
+Disallow: /
+User-agent: Omgili
+Disallow: /
+
+## Meta’s bot that crawls public web pages to improve language models for their speech recognition technology.
+User-agent: FacebookBot
 Disallow: /
