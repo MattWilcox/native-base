@@ -34,11 +34,15 @@
 		box-sizing : border-box;
 	}
 
-	/* Remove inconsistent default margins, paddings, borders. Make everything inherit font styles. */
+	/* Ensure consistent default margins, paddings, borders.
+	   Make everything inherit font styles.
+	   Background-repeat should by default not repeat.
+	   Use more modern text wrap to help ensure no typographic widows */
 	* {
 		margin: 0; padding: 0; border-width: 0;
 		font-size: 100%; font: inherit;
 		background-repeat: no-repeat;
+		text-wrap: pretty;
 	}
 
 	html {
@@ -98,10 +102,14 @@
 		}
 	}
 
-	/* Becuase :is() is a forgiving selector, we can add multiple rules that might be unrecognised by the browser - and if a selector matches the rules are applied to that selector match.
+	/* Becuase :is() and :where() are forgiving selectors, we can add multiple rules that might be unrecognised by the browser - and if a selector matches the rules are applied to that selector match.
 
-	Without using :is(), when a browser doesn't recognise a single selector in a selector list the browser will discards the whole ruleset. */
-		:is(
+	Without using :is(), when a browser doesn't recognise a single selector in a selector list the browser will discards the whole ruleset.
+
+	:where has no specificity, :is takes the specificity of the most specific selector within the group.
+	:is vs :where examples - https://developer.mozilla.org/en-US/docs/Web/CSS/:where#examples
+	*/
+		:where(
 			::-webkit-selection,
 			::-moz-selection,
 			::selection
@@ -110,7 +118,7 @@
 			color: #fff;
 		}
 
-		:is(
+		:where(
 			::-webkit-input-placeholder,
 			input:-moz-placeholder,
 			::placeholder
@@ -123,7 +131,7 @@
 		input[type=submit] {
 			-webkit-appearance : none;
 		}
-		input[type="search"]:is(
+		input[type="search"]:where(
 			::-webkit-search-decoration,
 			::-webkit-search-cancel-button
 		),
@@ -386,7 +394,7 @@
 	:where(.uc_hide-visually):not(:focus):not(:active) { /* screen readers still get the content */
 		/* Source:
 		   https://www.tpgi.com/the-anatomy-of-visually-hidden/
-			 https://www.a11yproject.com/posts/how-to-hide-content/ */
+		   https://www.a11yproject.com/posts/how-to-hide-content/ */
 		position: absolute;
 		height: 1px; width: 1px; clip-path: inset(50%);
 		overflow: hidden; white-space: nowrap;
