@@ -1,11 +1,11 @@
 import FetchWrapper from './fetch-wrapper.js';
-const thisWebsiteAPI = new FetchWrapper(`${window.location.protocol}//${window.location.host}` );
+const thisWebsiteAPI = new FetchWrapper(`${window.location.protocol}//${window.location.host}`);
 
 /**
  * Returns the type of interactions the device supports (click / mouseover)
  * @returns {string}
  */
-function interactionType() {
+export function interactionType() {
 	let interactionType = 'mouseover';
 
 	if( window.matchMedia('(hover: hover)') ) { // desktop
@@ -36,35 +36,47 @@ function windowHasScrolled() {
 }
 
 /**
- * Enable animated "intro" on blocks that scroll into view
+ * Adds an event listener to the window which will indicate if the page has scrolled by updating `data-page-has-scrolled` to true or false.
  */
-function scrollAnimatedBlocks() {
+export function initWindowHasScrolled() {
+	window.addEventListener('scroll', function() {
+		windowHasScrolled();
+	});
+}
+
+/**
+ * Finds HTML elements with a `data-scroll-reveal` attribute, and uses an IntersectionObserver to add a `data-in-viewport` attribute to that element when it's scrolled inside the viewport.
+ * @param rootMargin - defaults to `0 0 -20% 0`
+ */
+export function scrollAnimatedBlocks(rootMargin = "0 0 -20% 0") {
 	if (!!window.IntersectionObserver) {
-		console.log('supportsIntersectionObserver');
 		document.querySelector('html').dataset.supportsIntersectionObserver = 'true';
 
 		let observer = new IntersectionObserver((watchList, observer) => {
 			watchList.forEach(watchedElement => {
 				if (watchedElement.isIntersecting) {
-					// console.log(watchedElement);
 					watchedElement.target.dataset.inViewport = 'true';
 					observer.unobserve(watchedElement.target);
 				}
 			});
-		}, {rootMargin: "0px 0px -20% 0px"});
+		}, {
+			rootMargin: rootMargin
+		});
 
 		document.querySelectorAll('[data-scroll-reveal]').forEach(watchTarget => {
 			observer.observe(watchTarget);
 		});
-	} else { console.log('Browser does not support IntersectionObserver') }
+	}
+	else {
+		console.log(`Browser doesn't support IntersectionObserver`)
+	}
 }
 
 /**
- * Take a link with a class of `popup` and create a modal displaying higher resolution of the thumbnail image
- *
+ * For images on our website.
  * @param {Node} popupLink
  */
-function handlePopupImageLink( popupLink ) {
+function handlePopupImageLink(popupLink) {
 	popupLink.addEventListener('click', (e) => {
 		e.preventDefault();
 		let parser = new DOMParser();
@@ -94,24 +106,81 @@ function handlePopupImageLink( popupLink ) {
 				let lightbox = document.querySelector('#lightbox');
 				lightbox.showModal();
 				clickedLink.dataset.fetchStatus = 'loaded';
+
+				// remove the entire thing from the DOM when closed, getting us back to where we were before clicked
+				document.querySelector('#lightbox').addEventListener("close", e => {
+					e.target.remove();
+				});
 			})
 			.catch(error => {
 				console.error(error);
 			});
-
-		// remove the entire thing from the DOM when closed, to stop any video from continuing to play
-		document.querySelector('#lightbox').addEventListener("close", e => {
-			e.target.remove();
-		});
 	})
 }
 
 /**
- * Activate all links that have a class `popup`
+ * For links to youtube
+ * @param {Node} popupLink
  */
-function popupImages() {
+function handlePopupYoutubeLink(popupLink) {
+	popupLink.addEventListener('click', (e) => {
+		e.preventDefault();
+		let clickedLink = e.currentTarget;
+		let clickedUrl  = new URL(clickedLink.href);
+		let videoId     = clickedUrl.searchParams.get('v');
+		let videoWeWant = `
+			<iframe
+				width="560" height="315"
+				src="https://www.youtube-nocookie.com/embed/${videoId}"
+				title="YouTube video player"
+				allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+				allowfullscreen
+			></iframe>
+		`;
+
+		clickedLink.dataset.fetchStatus = "loading";
+
+		document.querySelector('body').insertAdjacentHTML('afterbegin', `
+			<dialog id="lightbox">
+				<div class="wrapper">
+					<div class="content">
+						${videoWeWant}
+					</div>
+					<form method="dialog">
+						<button><img src="/dist/svg/x.svg" alt="Close"></button>
+					</form>
+				</div>
+			</dialog>
+		`);
+
+		let lightbox = document.querySelector('#lightbox') ?? null;
+		let theVideo = document.querySelector('#lightbox iframe');
+
+		lightbox.showModal();
+		clickedLink.dataset.fetchStatus = "loaded";
+
+		// remove the entire thing from the DOM when closed, to stop the video from continuing to play
+		document.querySelector('#lightbox').addEventListener("close", e => {
+			e.target.remove();
+		});
+	});
+}
+
+/**
+ * Activate all anchor links that have a `data-popup="image"` attribute.
+ */
+export function initPopupImages() {
 	document.querySelectorAll('a[data-popup="image"]').forEach( popupLink => {
 		handlePopupImageLink( popupLink );
+	});
+}
+
+/**
+ * Activate all anchor links that have a `data-popup="youtube"` attribute.
+ */
+export function initPopupYoutube() {
+	document.querySelectorAll('a[data-popup="youtube"]').forEach( popupLink => {
+		handlePopupYoutubeLink( popupLink );
 	});
 }
 
@@ -123,10 +192,10 @@ function popupImages() {
  *
  * @example data-date-posted="2023-06-23T09:43:58+01:00"
  */
-function relativeAges(targetElement, outputTarget) {
+export function relativeAges(targetElement, outputTarget) {
 	const utcDate = new Date();
 	const isoDate = utcDate.toISOString();
-	const rtf1 = new Intl.RelativeTimeFormat(
+	const rtf1    = new Intl.RelativeTimeFormat(
 		'en-GB',
 		{ numeric: 'auto' }
 	);
@@ -134,11 +203,11 @@ function relativeAges(targetElement, outputTarget) {
 	document
 		.querySelectorAll( targetElement )
 		.forEach(item => {
-			const prodDate = new Date(item.dataset.dateCreated);
+			const prodDate  = new Date(item.dataset.dateCreated);
 			const dateInUTC = new Date(isoDate);
 
 			let differenceInDays = Math.abs(dateInUTC.getDate() - prodDate.getDate());
-			let output = rtf1.format(0 - differenceInDays, 'day')
+			let output           = rtf1.format(0 - differenceInDays, 'day')
 
 			if (differenceInDays > 6) {
 				item
@@ -152,12 +221,9 @@ function relativeAges(targetElement, outputTarget) {
 }
 
 /* Fire functions on load */
-relativeAges('[data-date-posted]','.meta');
-windowHasScrolled();
-popupImages();
+initPopupImages();
+initPopupYoutube();
+initWindowHasScrolled();
+sprigFormWatcher();
 scrollAnimatedBlocks();
-
-/* Hook functions up to event listeners, so they update things as needed later */
-window.addEventListener('scroll', function() {
-	windowHasScrolled();
-});
+relativeAges('[data-date-posted]','.meta');
