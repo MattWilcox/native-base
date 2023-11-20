@@ -133,11 +133,15 @@
 	<main id="main">
 		<hgroup class="uc_rich-text"><!-- Used to group a heading with any secondary content, such as subheadings / taglines / timestamps -->
 			<h1 class="uc_h1">Kitchen Sink</h1>
-			<p>This page in its entirety is a way to have examples of many of the main mark-up and styling patterns I use, it's not in itself meant to make sense or be "real content". There are tons of in-line comments.</p>
-			<p class="uc_callout">View the source of this page.</p>
+			<p>Just a ton of markup examples.</p>
 		</hgroup>
 
+		<p>This page in its entirety is a way to have examples of many of the main mark-up and styling patterns I use, it's not in itself meant to make sense or be "real content". There are tons of in-line comments.</p>
+		<p class="uc_callout">View the source of this page.</p>
+
 		<article><!-- articles are discrete "islands" of content that make sense out of context. -->
+			<h2>Example Code</h2>
+
 			<section class="uc_rich-text"><!-- <section> is used for generic blocks of content that have a heading. -->
 				<h2 class="uc_h2">Headings</h2>
 				<ul>
@@ -237,10 +241,11 @@
 		</article>
 
 		<article><!-- articles are discrete "islands" of content that make sense out of context. -->
-			<section class="uc_rich-text"><!-- <section> is used for generic blocks of content that have a heading. -->
-				<h2 class="uc_h2">Example form markup</h2>
+			<h2 class="uc_h2">Form markup guide</h2>
 
-				<p>This is a standardised method to mark-up form content.</p>
+			<section class="uc_rich-text"><!-- <section> is used for generic blocks of content that have a heading. -->
+				<h3>Example Form</h3>
+				<p>This shows my standardised method for marking up form content.</p>
 
 				<link
 					rel="stylesheet"
@@ -508,10 +513,7 @@
 				</form>
 			</section>
 
-			<aside
-				aria-label="More about forms"
-				class="uc_rich-text"
-			><!-- aside represents content indirectly related to the main block -->
+			<aside class="uc_rich-text"><!-- aside represents content indirectly related to the main block and has an implicit ARIA role of "complementary" -->
 				<h3 class="uc_h3">External resources</h3>
 				<ul>
 					<li>
