@@ -287,6 +287,10 @@
 			}
 
 		/* ## Dialog */
+			body:has(dialog[open]) { /* Stop page scrolling if there's an open dialog */
+				overflow: hidden;
+			}
+
 			dialog.modal {
 				position: sticky; inset: 0;
 				max-width: 40ch; border: 0; padding: var(--gap);
