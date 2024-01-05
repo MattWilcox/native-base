@@ -172,7 +172,7 @@
 		}
 
 		:target { /* ensure it's clearly in the viewport */
-			scroll-padding-block-start: 2rem;
+			scroll-padding-block: 2rem 10vh;
 		}
 
 	/* # CSS Custom Properties
