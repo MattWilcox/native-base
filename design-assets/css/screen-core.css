@@ -208,11 +208,10 @@
 
 			/*
 				Text sizes based on the Modular Scale, with fluid base size.
-				See https://modern-fluid-typography.vercel.app/ for the fluid base generation.
-				This is set so that it's 16px at 320px, to 20px at 1280px.
+				See https://chrisburnell.com/clamp-calculator/ for the fluid base generation.
+				This is set so that it's 16px at 360px, to 22px at 1200px.
 			*/
-			--font-size-root:          14px; /* Required for the font-size base. Goes from 16px at mobile to 20px desktop */
-			--font-size-base:          clamp(1.143rem, 0.5vw + 1rem, 1.429rem);
+			--font-size-base:          clamp(1rem, 0.839rem + 0.714vw, 1.375rem);
 
 			/* The other font sizes are then relative to the base font as it's scaled at the moment */
 			--font-size-diminished:    calc( 0.875 * var(--font-size-base) ); /* e.g., footer text or footnote */
@@ -249,10 +248,6 @@
 			line-height: 1.375;
 			font-family: var(--font-family-primary);
 			hyphens: none;
-		}
-
-		:where(p, h1, h2, h3, h4, h5, h6) {
-			overflow-wrap: break-word; /* if a word needs to split on a long line, split it. */
 		}
 
 		sup       { vertical-align: top; font-size: .75em; }
