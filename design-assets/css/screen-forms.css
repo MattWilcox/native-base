@@ -76,6 +76,10 @@
 		}
 	}
 
+	:where(textarea.uc_elastic) { /* Experimental support in Chrome, grows textarea to contain all content. See https://blog.stephaniestimac.com/posts/2024/01/css-field-sizing/ */
+		field-sizing: content;
+	}
+
 	:where(.ui-error-message, .ui-instructions) {
 		padding: 1rem 0.5rem 1em 3.5em; border-radius: 0.5rem 0.5rem; border: 0.15em solid red;
 		background-image:
