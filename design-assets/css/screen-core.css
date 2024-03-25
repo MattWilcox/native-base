@@ -150,6 +150,9 @@
 			font-weight: normal; font-style: normal;
 			font-display: swap;
 		}
+
+		Don't forget that variable fonts may benefit from additional rules:
+		https://css-irl.info/how-i-solved-my-font-rendering-problem/
 		*/
 
 	/* # Focus management */
