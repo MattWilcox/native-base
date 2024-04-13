@@ -284,18 +284,97 @@
 				padding: var(--gap, 1rem) 0;
 			}
 
-		/* ## Dialog */
-			body:has(dialog[open]) { /* Stop page scrolling if there's an open dialog */
+		/* ## Dialog and popover */
+			/* Stop page scrolling if there's an open dialog
+			body:has(dialog[open]) {
 				overflow: hidden;
+			} */
+
+			[popover] {
+				&, &::backdrop {
+					transition:
+						display var(--fast) allow-discrete,
+						overlay var(--fast) allow-discrete,
+						opacity var(--fast);
+						opacity: 0;
+				}
+
+				&::backdrop {
+					background: black;
+				}
+
+				&:popover-open {
+					opacity: 1;
+
+					&::backdrop {
+						opacity: 0.5;
+					}
+				}
+
+				@starting-style {
+					&:popover-open,
+					&:popover-open::backdrop {
+						opacity: 0;
+					}
+				}
+			}
+			/* 1. IS OPEN STATE */
+				dialog[open] {
+					opacity: 1;
+					transform: translateY(0);
+					filter: blur(0px);
+
+					&::backdrop {
+						opacity: 1;
+						backdrop-filter: blur(0.25rem) saturate(0.5);
+					}
+				}
+
+			/* 2. EXIT STATE */
+				dialog {
+					transition:
+						transform var(--fast),
+						overlay var(--fast) allow-discrete,
+						opacity var(--fast),
+						filter var(--fast),
+						display var(--fast) allow-discrete;
+
+					margin: 4rem auto auto;
+					max-width: 80vw; max-height: 80vh;
+					padding: 2em;
+					overflow: auto; border-radius: 1em;
+					transform: translateY(-1em);
+					filter: blur(5px);
+					opacity: 0;
+
+					&::backdrop {
+						opacity: 0;
+						background: hsl(0 0% 0% / 0.25);
+						backdrop-filter: blur(0px);
+
+						transition:
+							opacity var(--fast),
+							backdrop-filter var(--fast);
+					}
+
+					form[method='dialog'] {
+					position: absolute; inset: 0 0 auto auto;
+				}
 			}
 
-			dialog.modal {
-				position: sticky; inset: 0;
-				max-width: 40ch; border: 0; padding: var(--gap);
-				background-color: hsl( var(--black) / 0.2 );
-				box-shadow: 0 0 var( --gap ) hsl( var(--black) / 0.6 );
-				backdrop-filter: blur(10px);
-			}
+			/* 3. BEFORE-OPEN STATE https://developer.mozilla.org/en-US/docs/Web/CSS/@starting-style */
+				@starting-style {
+					dialog[open] {
+						transform: translateY(-1em);
+						filter: blur(5px);
+						opacity: 0;
+
+						&::backdrop {
+							opacity: 0;
+							backdrop-filter: blur(0) saturate(1);
+						}
+					}
+				}
 
 		/* ## Tables */
 			table {
