@@ -570,4 +570,43 @@
 			display: block;
 		}
 	}
+
+	/* Blocks of content that are loaded via things like an iframe don't have an intrinsic known aspect-ratio, and setting "width: 100%" does not change the height as needed, like it would with an image element. This is how we work around that.
+	Note that we can use either a data property of a known value, or provide a custom aspect ratio in the mark-up:
+	<div class="uc_embedComtainer" data-aspect="widescreen">...</div>
+	or
+	<div class="uc_embedComtainer" style="--aspect: 23/17">...</div>
+	*/
+	:where(.uc_embedContainer) {
+		--_aspect: var(--aspect, 4/3);
+
+		position: relative;
+		width: 100%; aspect-ratio: var(--_aspect);
+		overflow: hidden;
+
+		& > * {
+			position: absolute; inset: 0 auto auto 0;
+			width: 100% !important; height: 100% !important;
+
+			* {
+				box-sizing: content-box;
+			}
+
+			img {
+				width: auto; max-width: none;
+			}
+		}
+
+		&[data-aspect="widescreen"] {
+			--_aspect: 16 / 9;
+		}
+
+		&[data-aspect="cinema185"] {
+			--_aspect: 1.85 / 1;
+		}
+
+		&[data-aspect="cinema239"] {
+			--_aspect: 2.39 / 1;
+		}
+	}
 }
