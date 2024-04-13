@@ -224,6 +224,5 @@ export function relativeAges(targetElement, outputTarget) {
 initPopupImages();
 initPopupYoutube();
 initWindowHasScrolled();
-sprigFormWatcher();
 scrollAnimatedBlocks();
 relativeAges('[data-date-posted]','.meta');
