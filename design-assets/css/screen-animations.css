@@ -11,6 +11,10 @@
 			Animations inside here are safe to have motion, as the user agent says the user is OK with it
 		*/
 
+		@view-transition {
+			navigation: auto;
+		}
+
 		picture.uc_pulseEffect {
 			/* An example animation that can be applied to picture elements, to slowly "zoom" an otherwise static image */
 			overflow: hidden;
@@ -22,7 +26,7 @@
 		}
 	}
 
-	html.js-supportsIntersectionObserver {
+	html[data-supports-intersection-observer] {
 		/* The JS helper lets the CSS know we have Intersection Observer by adding this class */
 
 		& [data-reveal-on-scroll=""] {
@@ -34,7 +38,7 @@
 			opacity: 0.2; filter: grayscale(1);
 			transition: opacity, clip-path, var(--slow, 0.6s); transition-delay: 0.1s;
 
-			&.js-inViewport {
+			&[data-in-viewport] {
 				/* This class is added by the helper JS when the element with `data-reveal-on-scroll` is visible */
 				opacity: 1; filter: grayscale(0);
 			}
@@ -52,7 +56,7 @@
 				& [data-reveal-on-scroll^="swipe"] {
 					will-change: clip-path; transition: all var(--slow, 0.6s); transition-delay: 0.1s;
 
-					&.js-inViewport { /* the end state for all "swipe" animations */
+					&[data-in-viewport] { /* the end state for all "swipe" animations */
 						clip-path: polygon(-5% -5%, 105% -5%, 105% 105%, -5% 105%) !important;
 					}
 				}
