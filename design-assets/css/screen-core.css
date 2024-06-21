@@ -67,6 +67,9 @@
 	}
 
 	/* form resets */
+	button {
+		all: unset;
+	}
 	:where(button, input, select, textarea) {
 		color: inherit;
 		font-family: inherit;
