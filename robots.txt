@@ -43,7 +43,7 @@ Disallow: /
 User-agent: Diffbot
 Disallow: /
 
-## This is just getting stupid and I hope governments step in to wreck these tech-bro thieves.
+## This is just getting stupid and I hope governments step in.
 User-agent: Bytespider
 Disallow: /
 User-agent: ImagesiftBot
