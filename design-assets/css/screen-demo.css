@@ -196,19 +196,33 @@
 }
 
 @layer utilities {
+	/* Visually emphasise a block of content in a consistent manner */
 	:where(.uc_callout) {
 		padding: 0.25em .5em;
 		background-color: hsl( var(--colour-callout) );
 		color: hsl( var(--colour-callout-contrast) );
 	}
 
+	/* Multiple treatments for stylistically "uppercased" text */
 	:where(.uc_uppercase) {
 		text-transform: uppercase;
 		letter-spacing: calc( (var(--ps-letter-spacing, 40) / 1000) * 1em );
 	}
-	:where(.uc_uppercase-adjusted) { /* Upper case characters sized down to look visually the same height as lower */
-		text-transform: uppercase;
-		letter-spacing: calc( (var(--ps-letter-spacing, 40) / 1000) * 1em );
+	/* This modifier makes upper case characters size down to look visually the same height as lowercase text that may be adjacent to it */
+	:where(.uc_uppercase.uc_adjusted) {
 		font-size: 0.875em;
+	}
+
+	/* Make a list flow inline, and decorate between items with a correctly sized vertical pipe */
+	:where(.uc_list-inline) {
+		display: flex;
+
+		& > * + * {
+			&:before {
+				/* See https://developer.mozilla.org/en-US/docs/Web/CSS/content#alternative_text */
+				content: " | ";      /* Fallback for browsers that don't support generated content alt-text */
+				content: " | " / ""; /* Specify a blank "alt text" for screen readers */
+			}
+		}
 	}
 }
