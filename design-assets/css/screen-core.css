@@ -45,6 +45,14 @@
 		text-wrap: pretty;
 	}
 
+	/*
+		Allow interpolation to and from keywords
+		REFERENCE: https://developer.chrome.com/docs/css-ui/animate-to-height-auto/
+	 */
+	:root {
+		interpolate-size: allow-keywords;
+	}
+
 	html {
 		text-size-adjust: none;              /* Text size only controlled by font-size */
 		-webkit-font-smoothing: antialiased; /* This is a good default in a modern Retina world */
