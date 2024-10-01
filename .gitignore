@@ -15,3 +15,6 @@
 Session.vim
 .netrwhist
 *~
+
+## Editor stuff no one wants
+/.idea/*
