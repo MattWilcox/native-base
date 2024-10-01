@@ -1,0 +1,74 @@
+/*
+	# SCREEN-LIBRARY.CSS
+
+		This file stores useful bits of CSS that are handy to have, but are not needed in all projects.
+		You should manually copy any useful blocks into some other CSS file, rather than include this file whole.
+*/
+@layer utilities {
+	/*
+		Automatic visual weight adjustments for logos with any aspect ratio's when in a row.
+		See: https://9elements.com/blog/building-the-perfect-logo-strip/
+
+		NOTE: Requires CSS --width and --height set up on the HTML <img/> elements too
+		NOTE2: @property can not be nested.
+
+		EXAMPLE MARKUP:
+		<div class="uc_logo-row">
+			<a href="/">
+				<img
+					src="..."
+					width=100 height=500
+					style="--width: 100; --height: 500"
+					class="logo"
+			</a>
+			<a href="/">
+				<img
+					src="..."
+					width=200 height=50
+					style="--width: 200; --height: 50"
+					class="logo"
+			</a>
+		</div>
+	*/
+	@property --captured-length {
+		syntax: "<length>";
+		initial-value: 0px;
+		inherits: false;
+	}
+	:where(.uc_logo-row) {
+		--strength: 1;
+		--base-height: 4rem;
+		--logo-min-size-factor: 0.375;
+		--logo-max-size-factor: 1.25;
+
+		display: flex;
+		justify-content: start;
+		align-items: center;
+		flex-wrap: wrap;
+		gap: var(--icon-gap, 2rem 3rem);
+		container-type: inline-size;
+
+		.logo {
+			display: block;
+			--captured-length: var(--base-height);
+			--area: pow(
+				tan(atan2(var(--captured-length), 1px)),
+				2
+			);
+			--diff: sqrt(
+				var(--area)
+				/
+				(var(--width) * var(--height))
+			);
+
+			--scaled-height: calc(1px * var(--height) * var(--diff));
+
+			width: auto;
+			height: clamp(
+				var(--base-height) * var(--logo-min-size-factor),
+				var(--base-height) + (var(--scaled-height) - var(--base-height)) * var(--strength),
+				var(--base-height) * var(--logo-max-size-factor)
+			);
+		}
+	}
+}
