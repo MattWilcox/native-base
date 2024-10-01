@@ -113,7 +113,7 @@
 		}
 	}
 
-	/* Becuase :is() and :where() are forgiving selectors, we can add multiple rules that might be unrecognised by the browser - and if a selector matches the rules are applied to that selector match.
+	/* Because :is() and :where() are forgiving selectors, we can add multiple rules that might be unrecognised by the browser - and if a selector matches the rules are applied to that selector match.
 
 	Without using :is(), when a browser doesn't recognise a single selector in a selector list the browser will discards the whole ruleset.
 
@@ -254,7 +254,6 @@
 			background-color: hsl( var(--white) );
 			color           : hsl( var(--black) );
 			accent-color    : var(--brand-colour, auto); /* https://developer.mozilla.org/en-US/docs/Web/CSS/accent-color */
-			font-size       : var(--font-size-root);
 		}
 
 		:where(body) {
@@ -329,6 +328,7 @@
 					}
 				}
 			}
+
 			/* 1. IS OPEN STATE */
 				dialog[open] {
 					opacity: 1;
