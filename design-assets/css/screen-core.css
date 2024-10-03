@@ -297,7 +297,7 @@
 		/* ## Dialog and popover */
 			/* Stop page scrolling if there's an open dialog
 			body:has(dialog[open]) {
-				overflow: hidden;
+				overflow: clip;
 			} */
 
 			[popover] {
@@ -489,7 +489,8 @@
 		   https://www.a11yproject.com/posts/how-to-hide-content/ */
 		position: absolute;
 		height: 1px; width: 1px; clip-path: inset(50%);
-		overflow: hidden; white-space: nowrap;
+		overflow: clip; /* overflow: hidden; creates a scroll container which is usually undesirable, see https://www.bram.us/2024/02/14/scroll-driven-animations-you-want-overflow-clip-not-overflow-hidden/ */
+		white-space: nowrap;
 	}
 
 	:where(.uc_hide-for-everyone) { /* screen readers also get the content hidden */
@@ -593,7 +594,7 @@
 
 		position: relative;
 		width: 100%; aspect-ratio: var(--_aspect);
-		overflow: hidden;
+		overflow: clip; /* overflow: hidden; creates a scroll container which is usually undesirable, see https://www.bram.us/2024/02/14/scroll-driven-animations-you-want-overflow-clip-not-overflow-hidden/ */
 
 		& > * {
 			position: absolute; inset: 0 auto auto 0;

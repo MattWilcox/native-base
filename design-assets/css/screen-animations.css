@@ -17,7 +17,7 @@
 
 		picture.uc_pulseEffect {
 			/* An example animation that can be applied to picture elements, to slowly "zoom" an otherwise static image */
-			overflow: hidden;
+			overflow: clip; /* overflow: hidden; creates a scroll container which is usually undesirable, see https://www.bram.us/2024/02/14/scroll-driven-animations-you-want-overflow-clip-not-overflow-hidden/ */
 
 			& img {
 				animation: scale 30s infinite;
