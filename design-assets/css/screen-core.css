@@ -66,6 +66,9 @@
 
 	   TL:DR;
 	   To get rid of a bullet, add `role="list"` to the UL or OL element.
+
+		 UPDATE:
+		 Looks like just using `list-style-type: ""` has the same result? Needs investigating.
 	*/
 	:where(ul, ol)[role='list'] {
 		list-style: none;
@@ -148,6 +151,35 @@
 		),
 		::-webkit-details-marker {
 			display: none;
+		}
+
+		/* Sensible defaults for dialog and popover, as I agree with Mayank - the built-in styles are terrible...
+		   https://mayank.co/notes/dialog-default-styles/
+		*/
+		:where(dialog, [popover]) {
+			border: none;
+			background: none;
+			color: inherit;
+			inset: unset;
+			max-width: unset;
+			max-height: unset;
+		}
+		:where(
+			dialog:not(
+				[open],
+				[popover]
+			),
+			[popover]:not(:popover-open)
+		) {
+			display: none !important;
+		}
+		/* Stop the page being scrollable when a modal dialog is open */
+		html:has(dialog:modal[open]) {
+			overflow: clip;
+		}
+		/* Stabilise the window to prevent layout shift if the scroll-bar may appear and disappear on interactions */
+		:where(html) {
+			scrollbar-gutter: stable;
 		}
 }
 
@@ -295,11 +327,6 @@
 			}
 
 		/* ## Dialog and popover */
-			/* Stop page scrolling if there's an open dialog
-			body:has(dialog[open]) {
-				overflow: clip;
-			} */
-
 			[popover] {
 				&, &::backdrop {
 					transition:
@@ -468,34 +495,44 @@
 	/* Utility classes start with a uc_ prefix, so they're obvious in markup */
 
 	/* Heading styles should not be set on the naked elements. Doing so often encourages people to use the wrong heading level purely to get the right look. Instead, use the right semantic heading level and apply a class to get the appropriate look. */
-	:where(
-		.uc_h1,
-		.uc_h2,
-		.uc_h3
-	 ) {
-		font-family   : var(--font-family-headings);
-		font-weight   : bold;
-		letter-spacing: var(--letter-spacing);
-		text-wrap     : balance;
-	}
+		:where(
+			.uc_h1,
+			.uc_h2,
+			.uc_h3
+		) {
+			font-family   : var(--font-family-headings);
+			font-weight   : bold;
+			letter-spacing: var(--letter-spacing);
+			text-wrap     : balance;
+		}
 
-	:where(.uc_h1) { font-size: var(--font-size-heading-large) }
-	:where(.uc_h2) { font-size: var(--font-size-heading) }
-	:where(.uc_h3) { font-size: var(--font-size-heading-small) }
+		:where(.uc_h1) { font-size: var(--font-size-heading-large) }
+		:where(.uc_h2) { font-size: var(--font-size-heading) }
+		:where(.uc_h3) { font-size: var(--font-size-heading-small) }
 
-	:where(.uc_hide-visually):not(:focus):not(:active) { /* screen readers still get the content */
-		/* Source:
-		   https://www.tpgi.com/the-anatomy-of-visually-hidden/
-		   https://www.a11yproject.com/posts/how-to-hide-content/ */
-		position: absolute;
-		height: 1px; width: 1px; clip-path: inset(50%);
-		overflow: clip; /* overflow: hidden; creates a scroll container which is usually undesirable, see https://www.bram.us/2024/02/14/scroll-driven-animations-you-want-overflow-clip-not-overflow-hidden/ */
-		white-space: nowrap;
-	}
+	/* Utilities for hiding content */
+		:where(.uc_hide-visually):not(:focus):not(:active) { /* screen readers still get the content */
+			/* Source:
+				https://www.tpgi.com/the-anatomy-of-visually-hidden/
+				https://www.a11yproject.com/posts/how-to-hide-content/ */
+			position: absolute;
+			height: 1px; width: 1px; clip-path: inset(50%);
+			overflow: clip; /* overflow: hidden; creates a scroll container which is usually undesirable, see https://www.bram.us/2024/02/14/scroll-driven-animations-you-want-overflow-clip-not-overflow-hidden/ */
+			white-space: nowrap;
+		}
 
-	:where(.uc_hide-for-everyone) { /* screen readers also get the content hidden */
-		display: none !important;
-	}
+		:where(.uc_hide-for-everyone) { /* screen readers also get the content hidden */
+			display: none !important;
+		}
+
+	/* Utility for text alignment on number based content, where alignment in columns matters */
+		:where(
+			.uc_currency,
+			.uc_numeric
+		) {
+			font-variant-numeric: tabular-nums;
+			text-align: end;
+		}
 
 	:where(.uc_button) {
 		display: inline-flex; align-items: center; gap: calc( var(--gap) / 2 );
@@ -511,77 +548,77 @@
 	}
 
 	/* Styling "blocks" of text such as from a Rich Text Editor, that contains multiple types of mostly text mark-up, such as paragraphs, ul, li, etc */
-	:where(.uc_rich-text) {
-		& > * + * {
-			/* This method of getting vertical spacing may end up redundant if margin-trim lands: https://developer.mozilla.org/en-US/docs/Web/CSS/margin-trim */
-			margin-block-start: var(--gap);
-		}
-
-		&:not([data-allow-long-lines]) > * {
-			max-inline-size: 72ch; /* Don't allow hard to read line-lengths unless there's a data attribute to say to allow it */
-		}
-
-		/*
-			Styling Headings
-
-			This is where CSS's lack of "mixin" feature hurts. In a "rich text" area, it's unlikely that the CMS would allow the addition of classes to headings - and even if it did many people aren't going to do that. So, we must try to scope our heading styles onto "raw heading tags" when we're inside a Rich Text area. That's what I'm doing here - if a heading *does not have a utility class on it* then we apply these styles to it.
-
-			In an ideal world we'd define our heading styles as re-usable chunks of CSS rulesets, and include them where we need them. Something like:
-
-			@mixin h1 {
-				// all the visual styles that make up a h1
+		:where(.uc_rich-text) {
+			& > * + * {
+				/* This method of getting vertical spacing may end up redundant if margin-trim lands: https://developer.mozilla.org/en-US/docs/Web/CSS/margin-trim */
+				margin-block-start: var(--gap);
 			}
 
-			.anything {
-				@output-mixin h1; // dumps all those styles into this selector ruleset
+			&:not([data-allow-long-lines]) > * {
+				max-inline-size: 72ch; /* Don't allow hard to read line-lengths unless there's a data attribute to say to allow it */
 			}
 
-			But no such pattern exists in CSS and the alternative - add the selectors you want to the same ruleset - is a method that disallows all sorts of organisational methodology in authoring.
-		*/
+			/*
+				Styling Headings
 
-		& h2:not([class*="uc_h"]) { /* A h2 that doesn't have any heading related utility class on it */
-			font-size: var(--font-size-heading);
-		}
-		& h3:not([class*="uc_h"]) { /* A h3 that doesn't have any heading related utility class on it */
-			font-size: var(--font-size-heading-small);
-		}
-		& h4:not([class*="uc_h"]) { /* A h4 that doesn't have any heading related utility class on it */
-			font-size: var(--font-size-promoted);
-		}
+				This is where CSS's lack of "mixin" feature hurts. In a "rich text" area, it's unlikely that the CMS would allow the addition of classes to headings - and even if it did many people aren't going to do that. So, we must try to scope our heading styles onto "raw heading tags" when we're inside a Rich Text area. That's what I'm doing here - if a heading *does not have a utility class on it* then we apply these styles to it.
 
-		& a:not([class]) { /* Anchors that have a class likely have some unique styling */
-			text-decoration: underline;
-			text-underline-offset: 0.15em;
-		}
+				In an ideal world we'd define our heading styles as re-usable chunks of CSS rulesets, and include them where we need them. Something like:
 
-		& li + li {
-			margin-block-start: 0.5em;
-		}
+				@mixin h1 {
+					// all the visual styles that make up a h1
+				}
 
-		& ol {
-			margin-left: 1.7em;
+				.anything {
+					@output-mixin h1; // dumps all those styles into this selector ruleset
+				}
 
-			& li::marker {
-				font-family: monospace; font-size: 0.875em;
+				But no such pattern exists in CSS and the alternative - add the selectors you want to the same ruleset - is a method that disallows all sorts of organisational methodology in authoring.
+			*/
+
+			& h2:not([class*="uc_h"]) { /* A h2 that doesn't have any heading related utility class on it */
+				font-size: var(--font-size-heading);
+			}
+			& h3:not([class*="uc_h"]) { /* A h3 that doesn't have any heading related utility class on it */
+				font-size: var(--font-size-heading-small);
+			}
+			& h4:not([class*="uc_h"]) { /* A h4 that doesn't have any heading related utility class on it */
+				font-size: var(--font-size-promoted);
+			}
+
+			& a:not([class]) { /* Anchors that have a class likely have some unique styling */
+				text-decoration: underline;
+				text-underline-offset: 0.15em;
+			}
+
+			& li + li {
+				margin-block-start: 0.5em;
+			}
+
+			& ol {
+				margin-left: 1.7em;
+
+				& li::marker {
+					font-family: monospace; font-size: 0.875em;
+				}
+			}
+
+			& ul {
+				margin-left: 1.2em;
+			}
+
+			& blockquote {
+				padding: 1em; margin-bottom: 1em;
+
+				& p:last-child {
+					margin-bottom: 0;
+				}
+			}
+
+			& iframe {
+				display: block;
 			}
 		}
-
-		& ul {
-			margin-left: 1.2em;
-		}
-
-		& blockquote {
-			padding: 1em; margin-bottom: 1em;
-
-			& p:last-child {
-				margin-bottom: 0;
-			}
-		}
-
-		& iframe {
-			display: block;
-		}
-	}
 
 	/* Blocks of content that are loaded via things like an iframe don't have an intrinsic known aspect-ratio, and setting "width: 100%" does not change the height as needed, like it would with an image element. This is how we work around that.
 	Note that we can use either a data property of a known value, or provide a custom aspect ratio in the mark-up:
@@ -589,36 +626,106 @@
 	or
 	<div class="uc_embedComtainer" style="--aspect: 23/17">...</div>
 	*/
-	:where(.uc_embedContainer) {
-		--_aspect: var(--aspect, 4/3);
+		:where(.uc_embedContainer) {
+			--_aspect: var(--aspect, 4/3);
 
-		position: relative;
-		width: 100%; aspect-ratio: var(--_aspect);
-		overflow: clip; /* overflow: hidden; creates a scroll container which is usually undesirable, see https://www.bram.us/2024/02/14/scroll-driven-animations-you-want-overflow-clip-not-overflow-hidden/ */
+			position: relative;
+			width: 100%; aspect-ratio: var(--_aspect);
+			overflow: clip; /* overflow: hidden; creates a scroll container which is usually undesirable, see https://www.bram.us/2024/02/14/scroll-driven-animations-you-want-overflow-clip-not-overflow-hidden/ */
 
-		& > * {
-			position: absolute; inset: 0 auto auto 0;
-			width: 100% !important; height: 100% !important;
+			& > * {
+				position: absolute; inset: 0 auto auto 0;
+				width: 100% !important; height: 100% !important;
 
-			* {
-				box-sizing: content-box;
+				* {
+					box-sizing: content-box;
+				}
+
+				img {
+					width: auto; max-width: none;
+				}
 			}
 
-			img {
-				width: auto; max-width: none;
+			&[data-aspect="widescreen"] {
+				--_aspect: 16 / 9;
+			}
+
+			&[data-aspect="cinema185"] {
+				--_aspect: 1.85 / 1;
+			}
+
+			&[data-aspect="cinema239"] {
+				--_aspect: 2.39 / 1;
 			}
 		}
 
-		&[data-aspect="widescreen"] {
-			--_aspect: 16 / 9;
-		}
+	/*
+		Automatic visual weight adjustments for logos with any aspect ratio's when in a row.
+		See: https://9elements.com/blog/building-the-perfect-logo-strip/
 
-		&[data-aspect="cinema185"] {
-			--_aspect: 1.85 / 1;
-		}
+		NOTE:  Requires CSS --width and --height set up on the HTML <img/> elements too
+		NOTE2: @property can not be nested.
 
-		&[data-aspect="cinema239"] {
-			--_aspect: 2.39 / 1;
+		EXAMPLE MARKUP:
+		<div class="uc_logo-row">
+			<a href="/">
+				<img
+					src="..."
+					width=100 height=500
+					style="--width: 100; --height: 500"
+					class="logo"
+				/>
+			</a>
+			<a href="/">
+				<img
+					src="..."
+					width=200 height=50
+					style="--width: 200; --height: 50"
+					class="logo"
+				/>
+			</a>
+		</div>
+	*/
+		@property --_captured-length {
+			syntax: "<length>";
+			initial-value: 0px;
+			inherits: false;
 		}
-	}
+		:where(.uc_logo-row) {
+			--_strength: 1;
+			--_base-height: 4rem;
+			--_logo-min-size-factor: 0.375;
+			--_logo-max-size-factor: 1.25;
+			--_icon-gap: 2rem 3rem;
+
+			display: flex;
+			justify-content: start;
+			align-items: center;
+			flex-wrap: wrap;
+			gap: var(--_icon-gap, 2rem 3rem);
+			container-type: inline-size;
+
+			.logo {
+				display: block;
+				--_captured-length: var(--_base-height);
+				--_area: pow(
+					tan(atan2(var(--_captured-length), 1px)),
+					2
+				);
+				--_diff: sqrt(
+					var(--_area)
+					/
+					(var(--width) * var(--height)) /* These are set on the HTML element itself */
+				);
+
+				--_scaled-height: calc(1px * var(--height) * var(--_diff));
+
+				width: auto;
+				height: clamp(
+					var(--_base-height) * var(--_logo-min-size-factor),
+					var(--_base-height) + (var(--_scaled-height) - var(--_base-height)) * var(--_strength),
+					var(--_base-height) * var(--_logo-max-size-factor)
+				);
+			}
+		}
 }
