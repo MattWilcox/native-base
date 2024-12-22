@@ -72,7 +72,7 @@
 		.formField
 	) {
 		& > * {
-			margin-top: var(--gap);
+			margin-block-start: var(--gap);
 		}
 	}
 
@@ -107,7 +107,7 @@
 	}
 
 	form > * + * {
-		margin-top: calc( var(--gap) * 2 );
+		margin-block-start: calc( var(--gap) * 2 );
 	}
 
 	fieldset:has( *[required] ) {
@@ -128,11 +128,11 @@
 		padding: var(--indent);
 
 		& > * + * {
-			margin-top: var(--gap);
+			margin-block-start: var(--gap);
 		}
 
 		& .theOptions {
-			margin-top: calc( 0.5 * var(--gap) );
+			margin-block-start: calc( 0.5 * var(--gap) );
 			display: flex; flex-wrap: wrap; gap: calc( 2 * var(--gap) );
 			padding      : var(--input-padding);
 			border-style : solid;
@@ -141,7 +141,7 @@
 			border-radius: var(--input-border-radius);
 
 			& .htmlField {
-				margin-bottom: 0;
+				margin-block-end: 0;
 			}
 		}
 	}
@@ -196,7 +196,7 @@
 				display: flex;
 
 				& input {
-					margin-right: 20px;
+					margin-inline-end: 20px;
 				}
 			}
 		}
@@ -219,7 +219,7 @@
 
 	.previouslyUploaded {
 		& p {
-			@include uppercase; margin-bottom: 0.5em;
+			@include uppercase; margin-block-end: 0.5em;
 		}
 
 		& ul {
@@ -261,7 +261,7 @@
 			display: grid; grid-template-columns: 1fr 1fr; gap: var(--gap);
 
 			& > * {
-				margin-top: 0;
+				margin-block-start: 0;
 			}
 		}
 

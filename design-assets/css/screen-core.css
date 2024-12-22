@@ -596,7 +596,7 @@
 			}
 
 			& ol {
-				margin-left: 1.7em;
+				margin-inline-start: 1.7em;
 
 				& li::marker {
 					font-family: monospace; font-size: 0.875em;
@@ -604,14 +604,14 @@
 			}
 
 			& ul {
-				margin-left: 1.2em;
+				margin-inline-start: 1.2em;
 			}
 
 			& blockquote {
-				padding: 1em; margin-bottom: 1em;
+				padding: 1em; margin-block-end: 1em;
 
 				& p:last-child {
-					margin-bottom: 0;
+					margin-block-end: 0;
 				}
 			}
 
