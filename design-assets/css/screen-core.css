@@ -439,37 +439,16 @@
 			}
 
 	/* # Image management */
-		img                           { max-width: 100%; }
-		a img                         { margin: 0; }
-		img[data-object-fit="contain"] { object-fit: contain; }
-		img[data-object-fit="cover"]   { object-fit: cover; }
+		img { max-width: 100%; }
+		a img { margin: 0; }
 
 		picture {
 			display: flex;
-		}
-		picture > img {
-			width: 100%; height: 100%;
-		}
 
-		/* loading spinner bg on <picture> elements */
-			picture {
-				background-color: hsl( var(--black) / 0.2 );
-				position: relative;
+			& > img {
+				width: 100%; height: 100%;
 			}
-			picture > img {
-				z-index: 1;
-			}
-			picture:before {
-				position: absolute; left: 50%; top: 50%; transform: translate(-50%,-50%);
-				content: ""; display: block; width: 3em; height: 3em; margin: 8px;
-				border-radius: 50%; border: 0.5em solid #fff;
-				border-color: #fff transparent #fff transparent;
-				animation: loadingSpinner var(--slow, 0.9s) linear infinite;
-			}
-			@keyframes loadingSpinner {
-				0%   { transform: translate(-50%,-50%) rotate(0deg); }
-				100% { transform: translate(-50%,-50%) rotate(360deg); }
-			}
+		}
 
 		/* Only render images when in the viewport, we can assume any image inside <header> is already in the viewport
 			REFERENCE: https://www.industrialempathy.com/posts/image-optimizations/
@@ -542,9 +521,10 @@
 		letter-spacing: calc( (var(--ps-letter-spacing, 40) / 1000) * 1em );
 		color: hsl( var(--white) ) !important;
 		transition: background-color, var(--fast);
-	}
-	:where(.uc_button):hover {
-		background-color: hsl( var(--brand-colour) / 1 );
+
+		&:hover {
+			background-color: hsl( var(--brand-colour) / 1 );
+		}
 	}
 
 	/* Styling "blocks" of text such as from a Rich Text Editor, that contains multiple types of mostly text mark-up, such as paragraphs, ul, li, etc */
