@@ -107,7 +107,10 @@
 				One method to try and get the best of both worlds is to use JS so that the client's browser adds the `aria-current="page"` to the correct element, instead of the server needing to do this. It does mean that an accessibility enhancement becomes reliant on JS being enabled, but this is one of those choices that need to be considered per project.
 			-->
 
-			<search role="search" aria-label="Site wide"><!-- search is a new tag for 2023 https://html.spec.whatwg.org/multipage/grouping-content.html#the-search-element -->
+			<search
+				role="search"
+				aria-label="Site wide"
+			><!-- search is a new tag for 2023 https://html.spec.whatwg.org/multipage/grouping-content.html#the-search-element -->
 				<form action="">
 					<div class="formField"><!-- Why this markup? Read TODO:LINK -->
 						<div class="fieldWrapper">
