@@ -518,6 +518,7 @@
 		padding: var(--input-padding);
 		border: 2px solid transparent; border-radius: var(--input-border-radius);
 		background-color: hsl( var(--brand-colour) / 0.75 );
+		text-box: trim-both cap alphabetic; /* New, useful: https://developer.chrome.com/blog/css-text-box-trim */
 		letter-spacing: calc( (var(--ps-letter-spacing, 40) / 1000) * 1em );
 		color: hsl( var(--white) ) !important;
 		transition: background-color, var(--fast);
@@ -529,9 +530,25 @@
 
 	/* Styling "blocks" of text such as from a Rich Text Editor, that contains multiple types of mostly text mark-up, such as paragraphs, ul, li, etc */
 		:where(.uc_rich-text) {
-			& > * + * {
-				/* This method of getting vertical spacing may end up redundant if margin-trim lands: https://developer.mozilla.org/en-US/docs/Web/CSS/margin-trim */
-				margin-block-start: var(--gap);
+			--_child-spacing: 1lh;
+
+			@supports (margin-trim: block) {
+				/*
+					https://developer.mozilla.org/en-US/docs/Web/CSS/margin-trim
+					https://12daysofweb.dev/2024/css-margin-trim-line-height-units/
+				*/
+				margin-trim: block;
+
+				& > * {
+					margin-block: var(--_child-spacing);
+				}
+			}
+
+			@supports not (margin-trim: block) {
+				& > * + * {
+					/* This method of getting vertical spacing may end up redundant if margin-trim lands: https://developer.mozilla.org/en-US/docs/Web/CSS/margin-trim */
+					margin-block-start: var(--_child-spacing);
+				}
 			}
 
 			&:not([data-allow-long-lines]) > * {
