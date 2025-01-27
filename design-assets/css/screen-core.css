@@ -589,7 +589,7 @@
 			}
 
 			& li + li {
-				margin-block-start: 0.5em;
+				margin-block-start: calc( var(--_child-spacing) / 2 );
 			}
 
 			& ol {
@@ -605,7 +605,7 @@
 			}
 
 			& blockquote {
-				padding: 1em; margin-block-end: 1em;
+				padding: 1em; margin-block-end: var(--_child-spacing);
 
 				& p:last-child {
 					margin-block-end: 0;
